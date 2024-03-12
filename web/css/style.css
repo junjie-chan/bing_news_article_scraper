@@ -67,8 +67,8 @@
     height: 100%;
     left: 0;
     top: 0;
-    -webkit-transition: width 0.2s ease-in;
-    transition: width 0.2s ease-in;
+    -webkit-transition: width 0.15s ease-in;
+    transition: width 0.15s ease-in;
     width: 5px;
     z-index: -1;
 }
