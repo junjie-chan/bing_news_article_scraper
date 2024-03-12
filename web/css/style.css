@@ -52,6 +52,7 @@
 
 .sidebar_navigation li .fa {
     margin-right: 10px;
+    width: 20px;
 }
 .sidebar_navigation li a:active,
 .sidebar_navigation li a:hover,
