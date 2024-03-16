@@ -1,15 +1,28 @@
 :root{
+    /* General Settings */
+    --body_background_color:rgb(52, 52, 52);
+
+    /* Side Bar Settings */
     --sidebar_background_color:#1a1a1aec;
     --sidebar_text_color:#ffffffce;
-    --sidebar_separator_color:#ffffffe5;
     --sidebar_title_color:#c5383d;
     --sidebar_option_animation_color:#ee3a4054;
+    --sidebar_width:220px;
+    --sidebar_title_font_size:20px;
+    --sidebar_navigation_font_size:15px;
+}
+.content_container {
+    padding-top: 50px;
+    margin-left: var(--sidebar_width);
 }
 
+body{
+    background-color: var(--body_background_color);
+}
 /* Sidebar Styling */
 .sidebar_container {
     position: fixed;
-    width: 220px;
+    width: var(--sidebar_width);
     height: 100%;
     left: 0;
     overflow-x: hidden;
@@ -19,15 +32,13 @@
 }
 
 .sidebar_title {
-    padding: 30px 0;
-    font-size: 18px;
+    padding: 20px 0;
+    font-size: var(--sidebar_title_font_size);
     background-color: var(--sidebar_title_color);
     text-align: center;
 }
-
-.sidebar_container .separator{
-    height: 3px;
-    background-color: var(--sidebar_separator_color);
+.sidebar_navigation a{
+    font-size: var(--sidebar_navigation_font_size);
 }
 
 .sidebar_navigation {
@@ -44,7 +55,7 @@
     line-height: 20px;
 }
 .sidebar_navigation li a {
-    padding: 20px 15px 20px 30px;
+    padding: 20px 15px 20px 35px;
     display: block;
     color: var(--sidebar_text_color);
     text-decoration: none;
@@ -76,3 +87,89 @@
 .sidebar_navigation li:hover::before {
     width: 100%;
 }
+
+
+/* Content Block */
+/* .container div {
+    padding: 20px;
+    margin-bottom: 50px;
+    margin: 50px 100px;
+    color: black;
+    background-color: grey;
+}
+
+.container div:hover{
+    background-color: lightgrey;
+}
+
+.noEffect {
+    background-color: #777;
+}
+
+.reveal {
+    opacity: 0;
+    background-color: #9b003b;
+} */
+
+
+/*  */
+.inner_container {
+    margin-bottom: 50px;
+    padding: 0 30px;
+}
+.article_block{
+    /* background-color: hsla(0, 0%, 41%, 0.075); */
+    background-color:rgb(77, 75, 75);
+    border-radius: 13px;
+    /* box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.4); */
+    box-shadow: 1px 1px 4px 0px grey;
+    margin-bottom: 25px;
+    padding: 20px 30px 40px 30px;
+}
+/* Action Block Styling */
+.action_block {
+    display: flex;
+    justify-content: flex-end;
+}
+.save_button, .close_button{
+    /* color: var(--sidebar_title_color); */
+    color: var(--sidebar_text_color);
+    padding: 0 15px;
+    text-align: center;
+}
+.save_button:hover,
+.close_button:hover{
+    color: var(--sidebar_option_animation_color);
+}
+
+/* Title Styling*/
+.title_block{
+    margin: 10px 0;
+    color: var(--sidebar_text_color);
+    font-size: 24px;
+    font-weight: 700;
+}
+.text_ellipsis{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    /* 控制显示的行数为2行 */
+    -webkit-line-clamp: 3;
+    /* 根据实际文本行高进行调整 */
+    line-height: 1.5;
+    /* 最大高度为 line-height * 行数，这里为了简单计算直接用了3，根据实际line-height调整 */
+    max-height: 3;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+.description{
+    -webkit-line-clamp: 2;
+}
+
+/* Description Styling */
+.description_block{
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--sidebar_text_color);
+}
+/* Good color: rgba(255, 255, 255, 0.788) */
