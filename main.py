@@ -18,7 +18,7 @@ def run_template(file_name, data=None):
 
 
 @expose
-def get_sidebar_code():
+def generate_sidebar_code():
     return run_template('sidebar_template.jinja')
 
 
@@ -37,4 +37,4 @@ def get_articles():
     return content
 
 
-start('index.html', size=(1300, 740))
+# start('index.html', size=(1300, 740))

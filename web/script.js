@@ -44,8 +44,7 @@ $(document).ready(function () {
 // Display Sidebar
 eel.expose(display_sidebar);
 function display_sidebar() {
-  eel.get_sidebar_code()(function (html_content) {
-    console.log(html_content);
+  eel.generate_sidebar_code()(function (html_content) {
     var sidebar_container =
       document.getElementsByClassName("sidebar_container")[0];
     sidebar_container.insertAdjacentHTML("afterbegin", html_content);
