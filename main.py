@@ -18,9 +18,8 @@ def run_template(file_name, data=None):
 
 
 @expose
-def to_second_page():
-    show('test.html', size=(1000, 700))
-    # show('http://www.google.com')
+def get_sidebar_code():
+    return run_template('sidebar_template.jinja')
 
 
 @expose
