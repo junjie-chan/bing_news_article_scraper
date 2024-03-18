@@ -14,7 +14,7 @@ def get_data():
 
 @expose
 def to_second_page():
-    show('test.html', size=(1000, 700))
+    show('test.html', size=(1400, 740))
     # show('http://www.google.com')
 
 
@@ -33,6 +33,4 @@ def get_articles():
     return content
 
 
-print(get_articles())
-
-# start('index.html', size=(1000, 700))
+start('index.html', size=(1300, 740))
