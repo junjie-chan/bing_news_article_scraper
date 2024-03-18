@@ -41,6 +41,18 @@ $(document).ready(function () {
 //   inner_container.insertAdjacentHTML("afterbegin", eel.get_articles());
 // }
 
+// Display Sidebar
+eel.expose(display_sidebar);
+function display_sidebar() {
+  eel.generate_sidebar_code()(function (html_content) {
+    var sidebar_container =
+      document.getElementsByClassName("sidebar_container")[0];
+    sidebar_container.insertAdjacentHTML("afterbegin", html_content);
+  });
+}
+display_sidebar();
+
+// Display Article Blocks
 eel.expose(display_articles);
 function display_articles() {
   // 调用 Python 中的 get_articles 函数，并使用 then 方法来处理返回的 Promise
@@ -52,5 +64,3 @@ function display_articles() {
   });
 }
 display_articles();
-
-// inner_container.innerHTML = eel.get_articles();

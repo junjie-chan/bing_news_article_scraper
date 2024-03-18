@@ -1,21 +1,25 @@
 from jinja2 import Environment, FileSystemLoader
 from eel import init, start, expose, show
 from collections import deque
-# import eel
+from database_manager import DatabaseManager
 
-init('web')
+dbm = DatabaseManager()
+
 # 函数放在 .init 和 .start 之间
+init('web')
 
 
 @expose
-def get_data():
-    return {'title': 1}
+def run_template(file_name, data=None):
+    env = Environment(loader=FileSystemLoader('web/templates/'))
+    template = env.get_template(file_name)
+    context = {'data': data}
+    return template.render(context)
 
 
 @expose
-def to_second_page():
-    show('test.html', size=(1400, 740))
-    # show('http://www.google.com')
+def generate_sidebar_code():
+    return run_template('sidebar_template.jinja')
 
 
 @expose
