@@ -1,5 +1,5 @@
-// // const var=xxx;
-// const p = document.getElementById("test");
+// const var=xxx;
+const p = document.getElementById("test");
 
 // eel.expose;
 // function display(data) {
@@ -34,3 +34,23 @@ $(document).ready(function () {
     });
   });
 });
+
+// eel.expose
+// function display_articles() {
+//   var inner_container = document.getElementsByClassName("inner_container")[0];
+//   inner_container.insertAdjacentHTML("afterbegin", eel.get_articles());
+// }
+
+eel.expose(display_articles);
+function display_articles() {
+  // 调用 Python 中的 get_articles 函数，并使用 then 方法来处理返回的 Promise
+  eel.get_articles()(function (html_content) {
+    // 在 Promise 完成后，data 参数将包含 Python 函数的返回值
+    // 现在你可以使用这个值在页面上显示文章
+    var inner_container = document.getElementsByClassName("inner_container")[0];
+    inner_container.insertAdjacentHTML("afterbegin", html_content);
+  });
+}
+display_articles();
+
+// inner_container.innerHTML = eel.get_articles();

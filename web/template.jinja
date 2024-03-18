@@ -1,0 +1,31 @@
+{%for item in data%}
+<div class="article_block">
+    <!-- Action Block -->
+    <div class="action_block">
+        <!-- Save Button -->
+        <a href="#">
+            <div class="save_button">
+                <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
+            </div>
+        </a>
+        <!-- Close Button -->
+        <a href="#">
+            <div class="close_button">
+                <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+            </div>
+        </a>
+    </div>
+    <!-- Article Title -->
+    <div class="title_block">
+        <p class="text_ellipsis">
+            {{item.title}}
+        </p>
+    </div>
+    <!-- Article Description -->
+    <div class="description_block">
+        <p class="text_ellipsis description">
+            {{item.description}}
+        </p>
+    </div>
+</div>
+{%endfor%}
