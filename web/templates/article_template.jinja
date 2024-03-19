@@ -27,5 +27,17 @@
             {{item.description}}
         </p>
     </div>
+    <!-- Time & More -->
+    <div class="time_more_block row">
+        <div class="col-9 dates">
+            <p>Published Date: {{item.date}}</p>
+        </div>
+        <div class="col-3 read_more">
+            <button onclick="window.open('{{item.url}}')">
+                <i class="fa fa-angle-double-right fa-lg" aria-hidden="true"></i>
+                Read More
+            </button>
+        </div>
+    </div>
 </div>
 {%endfor%}
