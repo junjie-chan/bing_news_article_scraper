@@ -5,6 +5,7 @@ from database_manager import DatabaseManager
 from jinja2 import Environment, FileSystemLoader
 from pandas import DataFrame, set_option
 
+WINDOW_SIZE = (1300, 740)
 dbm = DatabaseManager()
 
 # 函数放在 .init 和 .start 之间
@@ -53,4 +54,4 @@ def get_page_article_blocks(page_no=1, articles_per_page=20):
     return run_template('article_template.jinja', articles)
 
 
-start('index.html', size=(1300, 740))
+start('index.html', size=WINDOW_SIZE)

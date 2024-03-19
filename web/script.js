@@ -64,3 +64,8 @@ function display_articles() {
   });
 }
 display_articles();
+
+// Load Article Source Page by URL
+function load_url(url) {
+  window.open(url, "_blank");
+}
