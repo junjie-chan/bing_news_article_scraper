@@ -1,7 +1,8 @@
-from jinja2 import Environment, FileSystemLoader
+from math import ceil
 from eel import init, start, expose, show
 from collections import deque
 from database_manager import DatabaseManager
+from jinja2 import Environment, FileSystemLoader
 
 dbm = DatabaseManager()
 
@@ -20,6 +21,11 @@ def run_template(file_name, data=None):
 @expose
 def generate_sidebar_code():
     return run_template('sidebar_template.jinja')
+
+
+@expose
+def calculate_maximum_page(articles_per_pate):
+    return ceil(dbm.get_count()/articles_per_pate)
 
 
 @expose
