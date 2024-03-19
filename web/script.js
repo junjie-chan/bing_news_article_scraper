@@ -56,7 +56,7 @@ display_sidebar();
 eel.expose(display_articles);
 function display_articles() {
   // 调用 Python 中的 get_articles 函数，并使用 then 方法来处理返回的 Promise
-  eel.get_articles()(function (html_content) {
+  eel.generate_page_article_blocks()(function (html_content) {
     // 在 Promise 完成后，data 参数将包含 Python 函数的返回值
     // 现在你可以使用这个值在页面上显示文章
     var inner_container = document.getElementsByClassName("inner_container")[0];
@@ -64,3 +64,19 @@ function display_articles() {
   });
 }
 display_articles();
+
+// Display Article Blocks
+eel.expose(display_next_page_buttons);
+function display_next_page_buttons() {
+  eel.generate_page_buttons()(function (html_content) {
+    var buttons_container =
+      document.getElementsByClassName("buttons_container")[0];
+    buttons_container.insertAdjacentHTML("afterbegin", html_content);
+  });
+}
+display_next_page_buttons();
+
+// Load Article Source Page by URL
+function load_url(url) {
+  window.open(url, "_blank");
+}
