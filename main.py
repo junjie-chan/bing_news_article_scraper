@@ -3,6 +3,7 @@ from eel import init, start, expose, show
 from collections import deque
 from database_manager import DatabaseManager
 from jinja2 import Environment, FileSystemLoader
+from pandas import DataFrame, set_option
 
 dbm = DatabaseManager()
 
@@ -24,8 +25,8 @@ def generate_sidebar_code():
 
 
 @expose
-def calculate_maximum_page(articles_per_pate):
-    return ceil(dbm.get_count()/articles_per_pate)
+def calculate_maximum_page(articles_per_page=20):
+    return ceil(dbm.get_count()/articles_per_page)
 
 
 @expose
@@ -43,4 +44,13 @@ def get_articles():
     return content
 
 
-# start('index.html', size=(1300, 740))
+@expose
+def get_page_article_blocks(page_no=1, articles_per_page=20):
+    articles = DataFrame(dbm.fetch_articles(page_no-1, articles_per_page))
+    articles.columns = ['id', 'title', 'url',
+                        'description', 'date', 'time', 'keyword']
+    articles = articles.to_dict(orient='records')
+    return run_template('article_template.jinja', articles)
+
+
+start('index.html', size=(1300, 740))
