@@ -8,7 +8,8 @@
     --sidebar_background_color:#1a1a1aec;
     --sidebar_text_color:#ffffffce;
     --sidebar_title_color:#c5383d;
-    --sidebar_option_animation_color:#ee3a4054;
+    /* --sidebar_option_animation_color:#ee3a4054; */
+    --sidebar_option_animation_color:rgb(52, 52, 52);
     --sidebar_width:220px;
     --sidebar_title_font_size:20px;
     --sidebar_navigation_font_size:15px;
@@ -202,4 +203,21 @@ body{
 .read_more{
     display: flex;
     justify-content: right;
+}
+
+/* Page Buttons Styling */
+.page-link,.page-link:focus{
+    background-color: var(--sidebar_text_color);
+    border-color: transparent;
+    color: var(--article_block_background_color);
+    font-weight: 600;
+}
+.page-link:hover,.page-item.active .page-link{
+    background-color: var(--article_block_background_color);
+    color: var(--sidebar_text_color);
+    border-color: transparent;
+}
+*:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
