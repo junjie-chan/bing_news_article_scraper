@@ -56,7 +56,7 @@ display_sidebar();
 eel.expose(display_articles);
 function display_articles() {
   // 调用 Python 中的 get_articles 函数，并使用 then 方法来处理返回的 Promise
-  eel.get_articles()(function (html_content) {
+  eel.get_page_article_blocks()(function (html_content) {
     // 在 Promise 完成后，data 参数将包含 Python 函数的返回值
     // 现在你可以使用这个值在页面上显示文章
     var inner_container = document.getElementsByClassName("inner_container")[0];
