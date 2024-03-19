@@ -65,7 +65,7 @@ function display_articles() {
 }
 display_articles();
 
-// Display Article Blocks
+// Display Next Page Buttons
 eel.expose(display_next_page_buttons);
 function display_next_page_buttons() {
   eel.generate_page_buttons()(function (html_content) {
