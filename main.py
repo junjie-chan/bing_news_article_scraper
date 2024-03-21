@@ -35,8 +35,13 @@ def generate_page_article_blocks(page_no=1, articles_per_page=20):
 
 
 @expose
+def get_maximum_pages():
+    return dbm.get_count()
+
+
+@expose
 def generate_page_buttons(articles_per_page=20, starting_page=1):
-    num_of_page = ceil(dbm.get_count()/articles_per_page)
+    num_of_page = ceil(get_maximum_pages()/articles_per_page)
     tags = ['Previous', *range(1, num_of_page+1), 'Next'] if num_of_page <= 5 else [
         'Previous', 1, 2, 3, 'ellipsis', num_of_page-2, num_of_page-1, num_of_page, 'Next']
     return run_template('next_page_template.jinja', tags)
