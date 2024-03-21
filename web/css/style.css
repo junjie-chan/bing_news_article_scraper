@@ -194,7 +194,7 @@ body{
 .time_more_block button:hover{
     background-color: var(--sidebar_option_animation_color);
     color: var(--sidebar_text_color);
-    font-weight: 400;
+    font-weight: 500;
 }
 .dates{
     display: flex;
