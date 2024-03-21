@@ -104,15 +104,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var active_page = parseInt(active_button.textContent);
 
       if (active_page != clicked_button_name) {
-        console.log(clicked_button_name);
         // Actions for previous and next buttons
         if (["Previous", "Next"].includes(clicked_button_name)) {
           // Find out the page to be displayed
-          if ((clicked_button_name = "Previous" && active_page != 1)) {
+          if (clicked_button_name == "Previous" && active_page > 1) {
             page_to_display = active_page - 1;
           } else if (
-            (clicked_button_name =
-              "Next" && active_page < (await eel.get_maximum_pages()()))
+            clicked_button_name == "Next" &&
+            active_page < (await eel.get_maximum_pages()())
           ) {
             page_to_display = active_page + 1;
           } else {
@@ -121,13 +120,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         } else if (active_page != clicked_button_name) {
           page_to_display = clicked_button_name;
         }
-
-        console.log(
-          "current page: " +
-            active_page +
-            ", page to display: " +
-            page_to_display
-        );
 
         if (clicked_button_name != "...") {
           // Remove active from its class list
