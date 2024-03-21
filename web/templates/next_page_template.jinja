@@ -1,0 +1,8 @@
+<ul class="pagination">
+    {% for tag in data %}
+    <li
+        class="page-item page_{{tag}} {{ 'active' if loop.index==2 else '' }} {{ 'disabled' if tage=='ellipsis' else '' }}">
+        <a class="page-link">{{'...' if tag=='ellipsis' else tag}}</a>
+    </li>
+    {% endfor %}
+</ul>
