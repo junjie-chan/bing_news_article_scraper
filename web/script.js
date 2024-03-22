@@ -67,7 +67,7 @@ $(document).ready(function () {
 
 // Load Content
 display_sidebar();
-display_articles();
+// display_articles();
 display_next_page_buttons();
 
 // 翻页处理
@@ -94,7 +94,7 @@ function get_page_no(button_element) {
 }
 
 function activate_button(new_button_index, current_activate_button) {
-  var button = get_element_by_class_name("page_" + new_button_index);
+  var button = get_element_by_class_name("index" + new_button_index);
   button.classList.add("active");
   current_activate_button.classList.remove("active");
 }
@@ -112,7 +112,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       // Check which button was clicked
       var clicked_button = e.target.parentNode;
       var clicked_index = get_element_class_name(clicked_button, "index");
-      console.log(clicked_button);
       var clicked_index_int = parseInt(clicked_index.replace("index", ""));
 
       // 点击已经激活的按钮或省略号会没反应
@@ -121,6 +120,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         clicked_index_int != 5
       ) {
         // 不需要移动按钮的情况：点击的按钮不是第4或6个、点击next的时候当前没有激活第三个按钮、点击previous的时候当前没有激活第七个按钮
+
         if (
           [4, 6].includes(clicked_index) ||
           (clicked_index_int == 9 && active_index_int == 3) ||
@@ -128,11 +128,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
         ) {
         } else {
           // 点击next或previous的情况
-          if (clicked_index_int == 1) {
+          if (clicked_index_int == 1 && get_page_no(clicked_button) != 1) {
+            // console.log("navigate to index:" + clicked_index_int - 1);
+            // activate_button(clicked_index_int - 1, active_button);
           } else if (clicked_index_int == 9) {
           } else {
             activate_button(clicked_index_int, active_button);
-            display_articles(get_page_no(clicked_button));
+            // display_articles(get_page_no(clicked_button));
           }
         }
       }
