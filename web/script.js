@@ -94,9 +94,29 @@ function get_page_no(button_element) {
 }
 
 function activate_button(new_button_index, current_activate_button) {
+  current_activate_button.classList.remove("active");
   var button = get_element_by_class_name("index" + new_button_index);
   button.classList.add("active");
-  current_activate_button.classList.remove("active");
+}
+
+async function move_buttons(clicked_button, maximum_pages) {
+  var ul = document.querySelector("div.buttons_container > ul");
+  var li_tags = ul.querySelectorAll("li");
+  var page_no = get_page_no(clicked_button);
+  var button_text = await eel.get_buttons_text(page_no, maximum_pages)();
+
+  for (let i = 0; i < li_tags.length; i++) {
+    var li_tag = li_tags[i];
+    // Change <li> text
+    li_tag.querySelector("a").textContent = button_text[i];
+    // Update class name page_
+    li_tag.classList.remove(get_element_class_name(li_tag, "page_"));
+    if (button_text[i] == "...") {
+      li_tag.classList.add("page_ellipsis");
+    } else {
+      li_tag.classList.add("page_" + button_text[i]);
+    }
+  }
 }
 
 // Get the page button that was clicked
@@ -104,6 +124,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // Actions after the click
   document.body.addEventListener("click", async function (e) {
     if (e.target.matches(".pagination .page-link")) {
+      var maximum_pages = await eel.get_maximum_pages()();
+
       // Get the current active button
       var active_button = get_element_by_class_name("active");
       var active_index = get_element_class_name(active_button, "index");
@@ -114,30 +136,52 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var clicked_index = get_element_class_name(clicked_button, "index");
       var clicked_index_int = parseInt(clicked_index.replace("index", ""));
 
-      // 点击已经激活的按钮或省略号会没反应
-      if (
-        clicked_button.textContent != active_button.textContent &&
-        clicked_index_int != 5
-      ) {
-        // 不需要移动按钮的情况：点击的按钮不是第4或6个、点击next的时候当前没有激活第三个按钮、点击previous的时候当前没有激活第七个按钮
-
-        if (
-          [4, 6].includes(clicked_index) ||
-          (clicked_index_int == 9 && active_index_int == 3) ||
-          (clicked_index_int == 1 && active_index_int == 7)
-        ) {
-        } else {
-          // 点击next或previous的情况
-          if (clicked_index_int == 1 && get_page_no(clicked_button) != 1) {
-            // console.log("navigate to index:" + clicked_index_int - 1);
-            // activate_button(clicked_index_int - 1, active_button);
-          } else if (clicked_index_int == 9) {
-          } else {
+      // 点击已经激活的按钮会没反应
+      if (clicked_index_int != active_index_int) {
+        var index4 = get_element_by_class_name("index4");
+        var index4_page_no = get_page_no(index4);
+        // 第四个按钮为第三页时
+        if (index4_page_no == 3) {
+          // 点击前三页
+          if ([2, 3, 4].includes(clicked_index_int)) {
             activate_button(clicked_index_int, active_button);
-            // display_articles(get_page_no(clicked_button));
+          }
+          // 点击后两页
+          else if ([5, 6].includes(clicked_index_int)) {
+            activate_button(4, active_button);
+            move_buttons(clicked_button, maximum_pages);
+          }
+          // 点击最后三页
+          else if ([8, 9, 10].includes(clicked_index_int)) {
+            activate_button(clicked_index_int, active_button);
           }
         }
       }
+
+      // 还没有去到最后9页的时候（第4个按钮小于14）：
+      // if ( && clicked_index_int != 7) {
+      // 需要移动按钮的情况：
+      // 1. 还没有去到最后9页的时候（第4个按钮小于14）：
+      //    可以向左右移动：第4个按钮的页码>3且<14
+      //    只能向右移动：第4个按钮的页码为3
+      // 2. 去到最后9页的时候：
+
+      //   if (
+      //     [4, 6].includes(clicked_index) ||
+      //     (clicked_index_int == 9 && active_index_int == 3) ||
+      //     (clicked_index_int == 1 && active_index_int == 7)
+      //   ) {
+      //   } else {
+      //     // 点击next或previous的情况
+      //     if (clicked_index_int == 1 && get_page_no(active_button) != 1) {
+      //       activate_button(active_index_int - 1, active_button);
+      //     } else if (clicked_index_int == 9) {
+      //     } else {
+      //       activate_button(clicked_index_int, active_button);
+      //       // display_articles(get_page_no(clicked_button));
+      //     }
+      //   }
+      // }
 
       // var maximum_pages = await eel.get_maximum_pages()();
       // // No ellipsis
