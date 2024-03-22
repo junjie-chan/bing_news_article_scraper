@@ -126,6 +126,10 @@ async function move_buttons(clicked_button, maximum_pages) {
   }
 }
 
+function get_button_text(button) {
+  return button.querySelector("a").textContent;
+}
+
 // Get the page button that was clicked
 document.addEventListener("DOMContentLoaded", (event) => {
   // Actions after the click
@@ -142,23 +146,40 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var clicked_button = e.target.parentNode;
       var clicked_index = get_element_class_name(clicked_button, "index");
       var clicked_index_int = parseInt(clicked_index.replace("index", ""));
+      var clicked_text = get_button_text(clicked_button);
 
       // 点击已经激活的按钮会没反应
       if (clicked_index_int != active_index_int) {
         var index3 = get_element_by_class_name("index3");
         var index3_page_no = get_page_no(index3);
-        var click_page_no = get_page_no(clicked_button);
 
         // 开始位置
         if (index3_page_no == 2) {
-          // 点击前4页
-          if ([2, 3, 4, 5].includes(clicked_index_int)) {
-            activate_button(clicked_index_int, active_button);
+          // 点击next
+          if (clicked_text == "Next") {
+            // 前3页为激活状态
+            if ([2, 3, 4, 5].includes(active_index_int)) {
+              activate_button(active_index_int + 1, active_button);
+            } // 第5页为激活状态
+            if (active_index_int == 6) {
+              activate_button(6, active_button);
+              move_buttons(get_element_by_class_name("index7"), maximum_pages);
+            }
           }
-          // 点击其他页
-          else if ([6, 7, 8, 9].includes(clicked_index_int)) {
-            activate_button(6, active_button);
-            move_buttons(clicked_button, maximum_pages);
+          // 点击previous
+          else if (clicked_text == "Previous") {
+          }
+          // 其他
+          else {
+            // 点击前4页
+            if ([2, 3, 4, 5].includes(clicked_index_int)) {
+              activate_button(clicked_index_int, active_button);
+            }
+            // 点击其他页
+            else if ([6, 7, 8, 9].includes(clicked_index_int)) {
+              activate_button(6, active_button);
+              move_buttons(clicked_button, maximum_pages);
+            }
           }
         }
         // 结尾位置
