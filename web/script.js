@@ -93,8 +93,8 @@ function get_page_no(button_element) {
   return parseInt(page_name.replace("page_", ""));
 }
 
-function activate_button(new_button_index, current_activate_button) {
-  current_activate_button.classList.remove("active");
+function activate_button(new_button_index, current_active_button) {
+  current_active_button.classList.remove("active");
   var button = get_element_by_class_name("index" + new_button_index);
   button.classList.add("active");
 }
@@ -143,97 +143,48 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var clicked_index = get_element_class_name(clicked_button, "index");
       var clicked_index_int = parseInt(clicked_index.replace("index", ""));
 
-      // 没有点击已经激活的按钮
+      // 点击已经激活的按钮会没反应
       if (clicked_index_int != active_index_int) {
-        // 点击已经激活的按钮会没反应
-        var index4 = get_element_by_class_name("index4");
-        var index4_page_no = get_page_no(index4);
+        var index3 = get_element_by_class_name("index3");
+        var index3_page_no = get_page_no(index3);
+        var click_page_no = get_page_no(clicked_button);
 
-        // 点击前三页
-        if ([2, 3, 4].includes(clicked_index_int)) {
-          // 第四个按钮为第三页时
-          if (index4_page_no == 3) {
+        // 开始位置
+        if (index3_page_no == 2) {
+          // 点击前4页
+          if ([2, 3, 4, 5].includes(clicked_index_int)) {
             activate_button(clicked_index_int, active_button);
           }
-          // 当去到最后的位置的时候
-          else if (index4_page_no == maximum_pages - 6) {
-          }
-        }
-        // 点击后两页
-        else if ([5, 6].includes(clicked_index_int)) {
-          // 只要还没有到需要去掉省略号的位置
-          if (index4_page_no < maximum_pages - 6) {
-            activate_button(4, active_button);
+          // 点击其他页
+          else if ([6, 7, 8, 9].includes(clicked_index_int)) {
+            activate_button(6, active_button);
             move_buttons(clicked_button, maximum_pages);
           }
         }
-        // 第四个按钮为第三页时
-        if (index4_page_no == 3) {
-          // 点击最后三页
-          if ([8, 9, 10].includes(clicked_index_int)) {
+        // 结尾位置
+        else if (index3_page_no == maximum_pages - 7) {
+          // 点击后4页
+          if ([7, 8, 9, 10].includes(clicked_index_int)) {
+            activate_button(clicked_index_int, active_button);
+          }
+          // 点击其他页
+          else if ([3, 4, 5, 6].includes(clicked_index_int)) {
+            activate_button(6, active_button);
+            move_buttons(clicked_button, maximum_pages);
+          }
+        }
+        // 中间位置
+        else {
+          // 点击左3页
+          if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
+            activate_button(6, active_button);
+            move_buttons(clicked_button, maximum_pages);
           }
         }
       }
     }
   });
 });
-
-// 还没有去到最后9页的时候（第4个按钮小于14）：
-// if ( && clicked_index_int != 7) {
-// 需要移动按钮的情况：
-// 1. 还没有去到最后9页的时候（第4个按钮小于14）：
-//    可以向左右移动：第4个按钮的页码>3且<14
-//    只能向右移动：第4个按钮的页码为3
-// 2. 去到最后9页的时候：
-
-//   if (
-//     [4, 6].includes(clicked_index) ||
-//     (clicked_index_int == 9 && active_index_int == 3) ||
-//     (clicked_index_int == 1 && active_index_int == 7)
-//   ) {
-//   } else {
-//     // 点击next或previous的情况
-//     if (clicked_index_int == 1 && get_page_no(active_button) != 1) {
-//       activate_button(active_index_int - 1, active_button);
-//     } else if (clicked_index_int == 9) {
-//     } else {
-//       activate_button(clicked_index_int, active_button);
-//       // display_articles(get_page_no(clicked_button));
-//     }
-//   }
-// }
-
-// var maximum_pages = await eel.get_maximum_pages()();
-// // No ellipsis
-// if (maximum_pages <= 5) {
-// } else {
-//   // Get the active page
-//   // var active_page = parseInt(active_button.textContent);
-
-//   // 更新分页所在位置，如：1,2,3...,5,6，那么如果点击3就应该将其往左移动一格
-//   // Update li with index 2-8 (exclude Previous & Next), move all li to left or right
-//   var ul = document.querySelector("div.buttons_container > ul");
-//   var li_tags = ul.querySelectorAll("li");
-//   for (let i = 1; i < li_tags.length - 1; i++) {
-//     // Exclude the ellipsis button
-//     if (i != 4) {
-//       var li_tag = li_tags[i];
-//       if (clicked_index_int == 9 && active_index_int == 3) {
-//         // Change <li> text
-//         var page_no_on_tag = parseInt(li_tag.textContent) + 1;
-//         li_tag.querySelector("a").textContent = page_no_on_tag;
-//         // Update class name page_
-//         li_tag.classList.remove(get_element_class_name(li_tag, "page_"));
-//         li_tag.classList.add("page_" + page_no_on_tag);
-//       } else if (clicked_index_int == 1 && active_index_int == 7) {
-//         var page_no_on_tag = parseInt(li_tag.textContent) - 1;
-//         li_tag.querySelector("a").textContent = page_no_on_tag;
-//         // Update class name page_
-//         li_tag.classList.remove(get_element_class_name(li_tag, "page_"));
-//         li_tag.classList.add("page_" + page_no_on_tag);
-//       }
-//     }
-//   }
 
 //   // Update active
 //   if (clicked_button_name == "Next" && active_page < maximum_pages) {
