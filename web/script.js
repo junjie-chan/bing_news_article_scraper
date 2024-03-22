@@ -184,22 +184,37 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
         // 结尾位置
         else if (index3_page_no == maximum_pages - 7) {
-          // 点击后4页
-          if ([7, 8, 9, 10].includes(clicked_index_int)) {
-            activate_button(clicked_index_int, active_button);
+          // 点击next且当前激活页不是倒数第1页
+          if (clicked_text == "Next" && active_index_int != 10) {
+            activate_button(active_index_int + 1, active_button);
           }
-          // 点击其他页
-          else if ([3, 4, 5, 6].includes(clicked_index_int)) {
-            activate_button(6, active_button);
-            move_buttons(clicked_button, maximum_pages);
+          // 其他
+          else {
+            // 点击后4页
+            if ([7, 8, 9, 10].includes(clicked_index_int)) {
+              activate_button(clicked_index_int, active_button);
+            }
+            // 点击其他页
+            else if ([3, 4, 5, 6].includes(clicked_index_int)) {
+              activate_button(6, active_button);
+              move_buttons(clicked_button, maximum_pages);
+            }
           }
         }
         // 中间位置
         else {
-          // 点击左3页
-          if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
+          // 点击next
+          if (clicked_text == "Next") {
             activate_button(6, active_button);
-            move_buttons(clicked_button, maximum_pages);
+            move_buttons(get_element_by_class_name("index7"), maximum_pages);
+          }
+          // 其他
+          else {
+            // 点击左3页
+            if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
+              activate_button(6, active_button);
+              move_buttons(clicked_button, maximum_pages);
+            }
           }
         }
       }
