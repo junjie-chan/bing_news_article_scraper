@@ -221,3 +221,7 @@ body{
     outline: none !important;
     box-shadow: none !important;
 }
+
+.buttons_container li a {
+    cursor: pointer;
+}
