@@ -50,7 +50,7 @@ def generate_page_buttons(starting_page=1):
 @expose
 def get_buttons_text(clicked_page, max_pages):
     # 最前位置
-    if clicked_page <= 4:
+    if clicked_page <= 5:
         return ['Previous', *range(1, 9), '...', 'Next']
     # 最后位置
     elif clicked_page >= max_pages-4:
