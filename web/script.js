@@ -168,6 +168,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
           }
           // 点击previous
           else if (clicked_text == "Previous") {
+            // 只要第一页不是激活状态
+            if (active_index_int > 2) {
+              activate_button(active_index_int - 1, active_button);
+            }
           }
           // 其他
           else {
@@ -210,10 +214,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
           }
           // 其他
           else {
-            // 点击左3页
-            if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
-              activate_button(6, active_button);
+            //跳转到第1页
+            if ([3, 4, 5].includes(get_page_no(clicked_button))) {
+              activate_button(get_page_no(clicked_button) + 1, active_button);
               move_buttons(clicked_button, maximum_pages);
+            }
+
+            // 其他
+            else {
+              // 点击左右3页
+              if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
+                activate_button(6, active_button);
+                move_buttons(clicked_button, maximum_pages);
+              }
             }
           }
         }
