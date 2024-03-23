@@ -219,7 +219,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
               activate_button(get_page_no(clicked_button) + 1, active_button);
               move_buttons(clicked_button, maximum_pages);
             }
-
+            // 跳转到最后1页
+            else if ([16, 17, 18].includes(get_page_no(clicked_button))) {
+              activate_button(get_page_no(clicked_button) - 10, active_button);
+              move_buttons(clicked_button, maximum_pages);
+            }
             // 其他
             else {
               // 点击左右3页
