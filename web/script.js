@@ -157,11 +157,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
         if (index3_page_no == 2) {
           // 点击next
           if (clicked_text == "Next") {
-            // 前3页为激活状态
+            // 前4页为激活状态
             if ([2, 3, 4, 5].includes(active_index_int)) {
               activate_button(active_index_int + 1, active_button);
             } // 第5页为激活状态
-            if (active_index_int == 6) {
+            else if (active_index_int == 6) {
               activate_button(6, active_button);
               move_buttons(get_element_by_class_name("index7"), maximum_pages);
             }
@@ -192,6 +192,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
           if (clicked_text == "Next" && active_index_int != 10) {
             activate_button(active_index_int + 1, active_button);
           }
+          // 点击previous
+          else if (clicked_text == "Previous") {
+            // 后4页为激活状态
+            if ([7, 8, 9, 10].includes(active_index_int)) {
+              activate_button(active_index_int - 1, active_button);
+            } // 倒数第5页为激活状态
+            else if (active_index_int == 6) {
+              activate_button(6, active_button);
+              move_buttons(get_element_by_class_name("index5"), maximum_pages);
+            }
+          }
           // 其他
           else {
             // 点击后4页
@@ -211,6 +222,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
           if (clicked_text == "Next") {
             activate_button(6, active_button);
             move_buttons(get_element_by_class_name("index7"), maximum_pages);
+          }
+          // 点击previous
+          else if (clicked_text == "Previous") {
+            activate_button(6, active_button);
+            move_buttons(get_element_by_class_name("index5"), maximum_pages);
           }
           // 其他
           else {
