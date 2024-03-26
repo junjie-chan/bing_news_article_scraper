@@ -131,6 +131,14 @@ function get_button_text(button) {
   return button.querySelector("a").textContent;
 }
 
+async function disable_button(button_index) {
+  get_element_by_class_name(button_index).classList.add("disabled");
+}
+
+async function enable_button(button_index) {
+  get_element_by_class_name(button_index).classList.remove("disabled");
+}
+
 // Get the page button that was clicked
 document.addEventListener("DOMContentLoaded", (event) => {
   // Actions after the click
@@ -158,6 +166,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         if (index3_page_no == 2) {
           // 点击next
           if (clicked_text == "Next") {
+            // 激活previous按钮
+            // enable_button("index1");
+
             // 前4页为激活状态
             if ([2, 3, 4, 5].includes(active_index_int)) {
               activate_button(active_index_int + 1, active_button);
@@ -171,11 +182,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
           else if (clicked_text == "Previous") {
             // 只要第一页不是激活状态
             if (active_index_int > 2) {
+              // 第三页是激活状态，取消previous按钮激活状态
+              // if (active_index_int == 3) {
+              //   disable_button("index1");
+              // }
               activate_button(active_index_int - 1, active_button);
             }
           }
           // 其他
           else {
+            // 激活previous按钮，只要点击的不是第一页
+            // enable_button("index1");
+            // 点击第一页的时候取消previous按钮激活状态
+            // if (clicked_index_int == 2) {
+            //   disable_button("index1");
+            // }
+
             // 点击前4页
             if ([2, 3, 4, 5].includes(clicked_index_int)) {
               activate_button(clicked_index_int, active_button);
