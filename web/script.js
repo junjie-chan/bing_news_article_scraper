@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           // 点击next
           if (clicked_text == "Next") {
             // 激活previous按钮
-            // enable_button("index1");
+            enable_button("index1");
 
             // 前4页为激活状态
             if ([2, 3, 4, 5].includes(active_index_int)) {
@@ -183,20 +183,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
             // 只要第一页不是激活状态
             if (active_index_int > 2) {
               // 第三页是激活状态，取消previous按钮激活状态
-              // if (active_index_int == 3) {
-              //   disable_button("index1");
-              // }
+              if (active_index_int == 3) {
+                disable_button("index1");
+              }
               activate_button(active_index_int - 1, active_button);
             }
           }
           // 其他
           else {
             // 激活previous按钮，只要点击的不是第一页
-            // enable_button("index1");
+            enable_button("index1");
             // 点击第一页的时候取消previous按钮激活状态
-            // if (clicked_index_int == 2) {
-            //   disable_button("index1");
-            // }
+            if (clicked_index_int == 2) {
+              disable_button("index1");
+            }
 
             // 点击前4页
             if ([2, 3, 4, 5].includes(clicked_index_int)) {
