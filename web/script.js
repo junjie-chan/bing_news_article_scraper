@@ -107,21 +107,22 @@ async function move_buttons(clicked_button, maximum_pages) {
 
   for (let i = 0; i < li_tags.length; i++) {
     var li_tag = li_tags[i];
+    var li_class_list = li_tag.classList;
     // Change <li> text
     li_tag.querySelector("a").textContent = button_text[i];
     // Update class name page_
-    li_tag.classList.remove(get_element_class_name(li_tag, "page_"));
+    li_class_list.remove(get_element_class_name(li_tag, "page_"));
     if (button_text[i] == "...") {
-      li_tag.classList.add("page_ellipsis");
+      li_class_list.add("page_ellipsis");
     } else {
-      li_tag.classList.add("page_" + button_text[i]);
+      li_class_list.add("page_" + button_text[i]);
     }
     // 对省略号进行更新：disabled
-    if (li_tag.classList.contains("disabled")) {
-      li_tag.classList.remove("disabled");
+    if (li_class_list.contains("disabled")) {
+      li_class_list.remove("disabled");
     }
-    if (li_tag.querySelector("a").textContent == "...") {
-      li_tag.classList.add("disabled");
+    if (button_text[i] == "...") {
+      li_class_list.add("disabled");
     }
   }
 }
