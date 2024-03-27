@@ -1,19 +1,21 @@
 :root{
     /* General Settings */
     --body_background_color:rgb(52, 52, 52);
+    --font_family:'Open Sans', sans-serif;
+    --article_block_background_color:rgb(77, 75, 75);
 
     /* Side Bar Settings */
     --sidebar_background_color:#1a1a1aec;
     --sidebar_text_color:#ffffffce;
     --sidebar_title_color:#c5383d;
-    --sidebar_option_animation_color:#ee3a4054;
+    /* --sidebar_option_animation_color:#ee3a4054; */
+    --sidebar_option_animation_color:rgb(52, 52, 52);
     --sidebar_width:220px;
     --sidebar_title_font_size:20px;
     --sidebar_navigation_font_size:15px;
 }
 .content_container {
-    padding-top: 50px;
-    margin-left: var(--sidebar_width);
+    padding: 50px 0 0 var(--sidebar_width);
 }
 
 body{
@@ -114,17 +116,16 @@ body{
 
 /*  */
 .inner_container {
-    margin-bottom: 50px;
-    padding: 0 30px;
+    padding: 0 30px 50px 30px;
 }
 .article_block{
     /* background-color: hsla(0, 0%, 41%, 0.075); */
-    background-color:rgb(77, 75, 75);
+    background-color:var(--article_block_background_color);
     border-radius: 13px;
     /* box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.4); */
     box-shadow: 1px 1px 4px 0px grey;
     margin-bottom: 25px;
-    padding: 20px 30px 40px 30px;
+    padding: 20px 30px 20px 30px;
 }
 /* Action Block Styling */
 .action_block {
@@ -144,7 +145,7 @@ body{
 
 /* Title Styling*/
 .title_block{
-    margin: 10px 0;
+    padding: 10px 0;
     color: var(--sidebar_text_color);
     font-size: 24px;
     font-weight: 700;
@@ -160,7 +161,7 @@ body{
     /* 最大高度为 line-height * 行数，这里为了简单计算直接用了3，根据实际line-height调整 */
     max-height: 3;
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: var(--font_family);
 }
 .description{
     -webkit-line-clamp: 2;
@@ -173,3 +174,54 @@ body{
     color: var(--sidebar_text_color);
 }
 /* Good color: rgba(255, 255, 255, 0.788) */
+
+/* Time & More */
+.time_more_block{
+    padding-top: 13px;
+}
+.time_more_block p {
+    margin: 0;
+    color: var(--sidebar_text_color);
+}
+.time_more_block button{
+    color: var(--article_block_background_color);
+    font-family: var(--font_family);
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 12px;
+}
+.time_more_block button:hover{
+    background-color: var(--sidebar_option_animation_color);
+    color: var(--sidebar_text_color);
+    font-weight: 500;
+}
+.dates{
+    display: flex;
+    align-items: center;
+}
+.read_more{
+    display: flex;
+    justify-content: right;
+}
+
+/* Page Buttons Styling */
+.page-link,.page-link:focus{
+    background-color: var(--sidebar_text_color);
+    border-color: transparent;
+    color: var(--article_block_background_color);
+    font-weight: 600;
+}
+.page-link:hover,.page-item.active .page-link{
+    background-color: var(--article_block_background_color);
+    color: var(--sidebar_text_color);
+    border-color: transparent;
+}
+*:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.buttons_container li a {
+    cursor: pointer;
+}

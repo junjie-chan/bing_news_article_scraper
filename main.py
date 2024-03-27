@@ -1,38 +1,63 @@
-from jinja2 import Environment, FileSystemLoader
+from math import ceil
 from eel import init, start, expose, show
 from collections import deque
-# import eel
+from database_manager import DatabaseManager
+from jinja2 import Environment, FileSystemLoader
+from pandas import DataFrame, set_option
 
-init('web')
+WINDOW_SIZE = (1300, 740)
+ARTICLES_PER_PAGE = 10
+dbm = DatabaseManager()
+
 # 函数放在 .init 和 .start 之间
+init('web')
 
 
 @expose
-def get_data():
-    return {'title': 1}
+def run_template(file_name, data=None):
+    env = Environment(loader=FileSystemLoader('web/templates/'))
+    template = env.get_template(file_name)
+    context = {'data': data}
+    return template.render(context)
 
 
 @expose
-def to_second_page():
-    show('test.html', size=(1000, 700))
-    # show('http://www.google.com')
+def generate_sidebar_code():
+    return run_template('sidebar_template.jinja')
 
 
 @expose
-def get_articles():
-    data = [{'title': 'JSW INFRASTRUCTURE share price Today Live Updates : JSW INFRASTRUCTURE shares slide',
-            'description': '''The government will soon introduce a standalone Act to allow major infrastructure projects to bypass lengthy resource consenting processes. The fast-track regime is the next step of the coalition government?€?s RMA reform agenda. A full replacement for the ...'''}]
-
-    env = Environment(loader=FileSystemLoader('web/'))
-    template = env.get_template('template.jinja')
-
-    context = {
-        'data': data
-    }
-    content = template.render(context)
-    return content
+def generate_page_article_blocks(page_no=1, articles_per_page=ARTICLES_PER_PAGE):
+    articles = DataFrame(dbm.fetch_articles(page_no-1, articles_per_page))
+    articles.columns = ['id', 'title', 'url',
+                        'description', 'date', 'time', 'keyword']
+    articles = articles.to_dict(orient='records')
+    return run_template('article_template.jinja', articles)
 
 
-print(get_articles())
+@expose
+def get_maximum_pages():
+    return ceil(dbm.get_count()/ARTICLES_PER_PAGE)
 
-# start('index.html', size=(1000, 700))
+
+@expose
+def generate_page_buttons(starting_page=1):
+    num_of_page = get_maximum_pages()
+    tags = get_buttons_text(starting_page, num_of_page)
+    return run_template('next_page_template.jinja', tags)
+
+
+@expose
+def get_buttons_text(clicked_page, max_pages):
+    # 最前位置
+    if clicked_page <= 5:
+        return ['Previous', *range(1, 9), '...', 'Next']
+    # 最后位置
+    elif clicked_page >= max_pages-4:
+        return ['Previous', '...', *range(max_pages-7, max_pages+1), 'Next']
+    # 其他中间位置
+    else:
+        return ['Previous', '...', *range(clicked_page-3, clicked_page+4), '...', 'Next']
+
+
+start('index.html', size=WINDOW_SIZE)
