@@ -20,6 +20,11 @@ class DatabaseManager:
                 keyword TEXT
             )
         ''')
+        self.__cursor.execute('''CREATE TABLE IF NOT EXISTS saved_articles (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                article_id TEXT
+            )
+        ''')
         self.__conn.commit()
 
     def close_db(self):
@@ -36,11 +41,15 @@ class DatabaseManager:
         self.__cursor.execute('SELECT COUNT(*) FROM articles')
         return self.__cursor.fetchone()[0]
 
+    def add_saved_article(self, article_id):
+        self.__cursor.execute(f'''INSERT INTO saved_articles (article_id)
+                                  VALUES ("{article_id}");''')
 
-# conn = connect('bing_news_articles')
-# c = conn.cursor()
+    def get_saved_articles(self):
+        self.__cursor.execute('SELECT article_id FROM saved_articles')
+        return self.__cursor.fetchone()
 
-# df = read_excel(r'D:\用户文档转移\Desktop\Bing News API\bing_news_articles_v2.xlsx', usecols='A,B,C,F,G,H')
-# df.to_sql('articles', con=conn, if_exists='append', index=False)
 
-# dm = DatabaseManager()
+# dbm = DatabaseManager()
+# dbm.add_saved_article('96')
+# print(dbm.get_saved_articles())
