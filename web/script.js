@@ -93,6 +93,14 @@ function get_page_no(button_element) {
   return parseInt(page_name.replace("page_", ""));
 }
 
+async function disable_button(button_index) {
+  get_element_by_class_name(button_index).classList.add("disabled");
+}
+
+async function enable_button(button_index) {
+  get_element_by_class_name(button_index).classList.remove("disabled");
+}
+
 function activate_button(new_button_index, current_active_button) {
   current_active_button.classList.remove("active");
   var button = get_element_by_class_name("index" + new_button_index);
@@ -129,14 +137,6 @@ async function move_buttons(clicked_button, maximum_pages) {
 
 function get_button_text(button) {
   return button.querySelector("a").textContent;
-}
-
-async function disable_button(button_index) {
-  get_element_by_class_name(button_index).classList.add("disabled");
-}
-
-async function enable_button(button_index) {
-  get_element_by_class_name(button_index).classList.remove("disabled");
 }
 
 // Get the page button that was clicked
@@ -213,10 +213,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
         else if (index3_page_no == maximum_pages - 7) {
           // 点击next且当前激活页不是倒数第1页
           if (clicked_text == "Next" && active_index_int != 10) {
+            // 点击next且当前激活页是倒数第3页，取消next按钮激活状态
+            if (active_index_int == 9) {
+              disable_button("index11");
+            }
             activate_button(active_index_int + 1, active_button);
           }
           // 点击previous
           else if (clicked_text == "Previous") {
+            // 激活next按钮
+            enable_button("index11");
+
             // 后4页为激活状态
             if ([7, 8, 9, 10].includes(active_index_int)) {
               activate_button(active_index_int - 1, active_button);
@@ -228,6 +235,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
           }
           // 其他
           else {
+            // 激活和取消next按钮
+            if (clicked_index_int == 10) {
+              disable_button("index11");
+            } else {
+              enable_button("index11");
+            }
+
             // 点击后4页
             if ([7, 8, 9, 10].includes(clicked_index_int)) {
               activate_button(clicked_index_int, active_button);
