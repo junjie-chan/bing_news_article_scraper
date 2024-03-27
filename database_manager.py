@@ -31,19 +31,16 @@ class DatabaseManager:
                 description TEXT,
                 date DATE,
                 time TIME,
-                keyword TEXT
-            )
-        ''')
-        self.__cursor.execute('''CREATE TABLE IF NOT EXISTS saved_articles (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                article_id TEXT
+                keyword TEXT,
+                is_bookmarked BOOLEAN DEFAULT 0,
+                is_in_bin BOOLEAN DEFAULT 0
             )
         ''')
         self.__conn.commit()
 
     @open_and_close_db
     def fetch_articles(self, offset=0, limit=20):
-        self.__cursor.execute(f'''SELECT * FROM articles
+        self.__cursor.execute(f'''SELECT id, title, url, description, date, time, keyword FROM articles
                                   ORDER BY date ASC, time ASC
                                   LIMIT {limit} OFFSET {offset};''')
         return self.__cursor.fetchall()
@@ -55,17 +52,19 @@ class DatabaseManager:
 
     @open_and_close_db
     def add_bookmark_article(self, article_id):
-        self.__cursor.execute(f'''INSERT INTO saved_articles (article_id)
-                                  VALUES ("{article_id}");''')
+        self.__cursor.execute(f'''UPDATE articles
+                                  SET is_bookmarked = 1
+                                  WHERE id = {article_id};
+                               ''')
         self.__conn.commit()
-        print(self.get_saved_articles())
 
     @open_and_close_db
     def get_bookmark_articles(self):
-        self.__cursor.execute('SELECT article_id FROM saved_articles')
+        self.__cursor.execute('''SELECT * FROM articles
+                                 WHERE is_bookmarked = 1;''')
         return self.__cursor.fetchall()
 
 
-# dbm = DatabaseManager()
+dbm = DatabaseManager()
 # dbm.add_saved_article('32')
-# print(dbm.get_saved_articles())
+print(dbm.get_bookmark_articles())
