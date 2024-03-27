@@ -12,7 +12,7 @@
     --sidebar_option_animation_color:rgb(52, 52, 52);
     --sidebar_width:220px;
     --sidebar_title_font_size:20px;
-    --sidebar_navigation_font_size:15px;
+    --sidebar_navigation_font_size:16px;
 }
 .content_container {
     padding: 50px 0 0 var(--sidebar_width);
@@ -73,6 +73,7 @@ body{
     text-decoration: none;
     outline: none;
 }
+
 
 .sidebar_navigation li::before {
     background-color: var(--sidebar_option_animation_color);
@@ -143,6 +144,7 @@ body{
     color: var(--sidebar_option_animation_color);
 }
 
+
 /* Title Styling*/
 .title_block{
     padding: 10px 0;
@@ -175,6 +177,7 @@ body{
 }
 /* Good color: rgba(255, 255, 255, 0.788) */
 
+
 /* Time & More */
 .time_more_block{
     padding-top: 13px;
@@ -204,6 +207,7 @@ body{
     display: flex;
     justify-content: right;
 }
+
 
 /* Page Buttons Styling */
 .page-link,.page-link:focus{

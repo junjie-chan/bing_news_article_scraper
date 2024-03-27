@@ -1,12 +1,3 @@
-// const b = document.getElementById("btn");
-// b.addEventListener("click", (event) => {
-//   p.innerHTML = "button clicked!";
-//   //   eel.to_second_page();
-//   // redirect
-//   //   window.location.href = "test.html";
-//   //   window.location.href = "https://www.google.com";
-// });
-
 // Display Sidebar
 eel.expose(display_sidebar);
 function display_sidebar() {
@@ -48,31 +39,6 @@ function load_url(url) {
   window.open(url, "_blank");
 }
 
-$(document).ready(function () {
-  /* Every time the window is scrolled ... */
-  $(window).scroll(function () {
-    /* Check the location of each desired element */
-    $(".reveal").each(function (i) {
-      var bottom_of_object = $(this).offset().top + $(this).outerHeight();
-      var bottom_of_window = $(window).scrollTop() + $(window).height();
-
-      /* If the object is completely visible in the window, fade it in */
-      if (bottom_of_window > bottom_of_object) {
-        $(this).animate({ opacity: "1" }, 1200);
-        /* 1500 is the duration of fade effect */
-      }
-    });
-  });
-});
-
-// Load Content
-display_sidebar();
-// display_articles();
-display_next_page_buttons();
-
-// 翻页处理
-var active_button_name = 1; // Default
-
 // Get the class name that contains specific string of an element
 function get_element_class_name(element, name) {
   let classes = element.classList;
@@ -93,10 +59,24 @@ function get_page_no(button_element) {
   return parseInt(page_name.replace("page_", ""));
 }
 
+async function disable_button(button_index) {
+  get_element_by_class_name(button_index).classList.add("disabled");
+}
+
+async function enable_button(button_index) {
+  get_element_by_class_name(button_index).classList.remove("disabled");
+}
+
 function activate_button(new_button_index, current_active_button) {
   current_active_button.classList.remove("active");
   var button = get_element_by_class_name("index" + new_button_index);
   button.classList.add("active");
+
+  // Display Page Content
+  var page_no = parseInt(
+    get_element_class_name(button, "page_").replace("page_", "")
+  );
+  display_articles(page_no);
 }
 
 async function move_buttons(clicked_button, maximum_pages) {
@@ -107,21 +87,22 @@ async function move_buttons(clicked_button, maximum_pages) {
 
   for (let i = 0; i < li_tags.length; i++) {
     var li_tag = li_tags[i];
+    var li_class_list = li_tag.classList;
     // Change <li> text
     li_tag.querySelector("a").textContent = button_text[i];
     // Update class name page_
-    li_tag.classList.remove(get_element_class_name(li_tag, "page_"));
+    li_class_list.remove(get_element_class_name(li_tag, "page_"));
     if (button_text[i] == "...") {
-      li_tag.classList.add("page_ellipsis");
+      li_class_list.add("page_ellipsis");
     } else {
-      li_tag.classList.add("page_" + button_text[i]);
+      li_class_list.add("page_" + button_text[i]);
     }
     // 对省略号进行更新：disabled
-    if (li_tag.classList.contains("disabled")) {
-      li_tag.classList.remove("disabled");
+    if (li_class_list.contains("disabled")) {
+      li_class_list.remove("disabled");
     }
-    if (li_tag.querySelector("a").textContent == "...") {
-      li_tag.classList.add("disabled");
+    if (button_text[i] == "...") {
+      li_class_list.add("disabled");
     }
   }
 }
@@ -130,13 +111,24 @@ function get_button_text(button) {
   return button.querySelector("a").textContent;
 }
 
-// Get the page button that was clicked
-document.addEventListener("DOMContentLoaded", (event) => {
-  // Actions after the click
-  document.body.addEventListener("click", async function (e) {
-    if (e.target.matches(".pagination .page-link")) {
-      var maximum_pages = await eel.get_maximum_pages()();
+// Load Content
+display_sidebar();
+display_articles();
+display_next_page_buttons();
 
+document.addEventListener("DOMContentLoaded", (event) => {
+  // Detect click action
+  document.body.addEventListener("click", async function (e) {
+    // If a close button within the article block is clicked
+    if (
+      e.target.matches(".article_block .action_block i") ||
+      e.target.matches(".article_block .action_block .save_button")
+    ) {
+      var article_id = e.target.closest(".article_block").getAttribute("id");
+    }
+    // If a pagination button is clicked
+    else if (e.target.matches(".pagination .page-link")) {
+      var maximum_pages = await eel.get_maximum_pages()();
       // Get the current active button
       var active_button = get_element_by_class_name("active");
       var active_index = get_element_class_name(active_button, "index");
@@ -157,28 +149,50 @@ document.addEventListener("DOMContentLoaded", (event) => {
         if (index3_page_no == 2) {
           // 点击next
           if (clicked_text == "Next") {
-            // 前3页为激活状态
+            // 激活previous按钮
+            enable_button("index1");
+
+            // 前4页为激活状态
             if ([2, 3, 4, 5].includes(active_index_int)) {
               activate_button(active_index_int + 1, active_button);
             } // 第5页为激活状态
-            if (active_index_int == 6) {
+            else if (active_index_int == 6) {
+              await move_buttons(
+                get_element_by_class_name("index7"),
+                maximum_pages
+              );
               activate_button(6, active_button);
-              move_buttons(get_element_by_class_name("index7"), maximum_pages);
             }
           }
           // 点击previous
           else if (clicked_text == "Previous") {
+            // 只要第一页不是激活状态
+            if (active_index_int > 2) {
+              // 第三页是激活状态，取消previous按钮激活状态
+              if (active_index_int == 3) {
+                disable_button("index1");
+              }
+              activate_button(active_index_int - 1, active_button);
+            }
           }
           // 其他
           else {
+            // 激活previous按钮，只要点击的不是第一页
+            enable_button("index1");
+            // 点击第一页的时候取消previous按钮激活状态
+            if (clicked_index_int == 2) {
+              disable_button("index1");
+            }
+
             // 点击前4页
             if ([2, 3, 4, 5].includes(clicked_index_int)) {
               activate_button(clicked_index_int, active_button);
             }
             // 点击其他页
             else if ([6, 7, 8, 9].includes(clicked_index_int)) {
+              // 运行完move_buttons再运行activate_button
+              await move_buttons(clicked_button, maximum_pages);
               activate_button(6, active_button);
-              move_buttons(clicked_button, maximum_pages);
             }
           }
         }
@@ -186,18 +200,46 @@ document.addEventListener("DOMContentLoaded", (event) => {
         else if (index3_page_no == maximum_pages - 7) {
           // 点击next且当前激活页不是倒数第1页
           if (clicked_text == "Next" && active_index_int != 10) {
+            // 点击next且当前激活页是倒数第3页，取消next按钮激活状态
+            if (active_index_int == 9) {
+              disable_button("index11");
+            }
             activate_button(active_index_int + 1, active_button);
+          }
+          // 点击previous
+          else if (clicked_text == "Previous") {
+            // 激活next按钮
+            enable_button("index11");
+
+            // 后4页为激活状态
+            if ([7, 8, 9, 10].includes(active_index_int)) {
+              activate_button(active_index_int - 1, active_button);
+            } // 倒数第5页为激活状态
+            else if (active_index_int == 6) {
+              await move_buttons(
+                get_element_by_class_name("index5"),
+                maximum_pages
+              );
+              activate_button(6, active_button);
+            }
           }
           // 其他
           else {
+            // 激活和取消next按钮
+            if (clicked_index_int == 10) {
+              disable_button("index11");
+            } else {
+              enable_button("index11");
+            }
+
             // 点击后4页
             if ([7, 8, 9, 10].includes(clicked_index_int)) {
               activate_button(clicked_index_int, active_button);
             }
             // 点击其他页
             else if ([3, 4, 5, 6].includes(clicked_index_int)) {
+              await move_buttons(clicked_button, maximum_pages);
               activate_button(6, active_button);
-              move_buttons(clicked_button, maximum_pages);
             }
           }
         }
@@ -205,15 +247,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
         else {
           // 点击next
           if (clicked_text == "Next") {
+            await move_buttons(
+              get_element_by_class_name("index7"),
+              maximum_pages
+            );
             activate_button(6, active_button);
-            move_buttons(get_element_by_class_name("index7"), maximum_pages);
+          }
+          // 点击previous
+          else if (clicked_text == "Previous") {
+            await move_buttons(
+              get_element_by_class_name("index5"),
+              maximum_pages
+            );
+            activate_button(6, active_button);
           }
           // 其他
           else {
-            // 点击左3页
-            if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
-              activate_button(6, active_button);
-              move_buttons(clicked_button, maximum_pages);
+            //跳转到第1页
+            if ([3, 4, 5].includes(get_page_no(clicked_button))) {
+              await move_buttons(clicked_button, maximum_pages);
+              activate_button(get_page_no(clicked_button) + 1, active_button);
+            }
+            // 跳转到最后1页
+            else if ([16, 17, 18].includes(get_page_no(clicked_button))) {
+              await move_buttons(clicked_button, maximum_pages);
+              activate_button(get_page_no(clicked_button) - 10, active_button);
+            }
+            // 其他
+            else {
+              // 点击左右3页
+              if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
+                await move_buttons(clicked_button, maximum_pages);
+                activate_button(6, active_button);
+              }
             }
           }
         }
@@ -222,51 +288,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
-//   // Update active
-//   if (clicked_button_name == "Next" && active_page < maximum_pages) {
-//     console.log("active index: " + active_index);
-//     active_button.classList.remove("active");
+// Scrolling Animation
+// $(document).ready(function () {
+//   /* Every time the window is scrolled ... */
+//   $(window).scroll(function () {
+//     /* Check the location of each desired element */
+//     $(".reveal").each(function (i) {
+//       var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+//       var bottom_of_window = $(window).scrollTop() + $(window).height();
 
-//     // var new_button = document.querySelectorAll(
-//     //   '[class*="index' + (active_index + 1) + '"]'
-//     // )[0];
-//     console.log("index" + (active_index + 1));
-//     console.log(
-//       document.getElementsByClassName("index" + (active_index + 1))
-//     );
-
-//     // page_to_display = active_page + 1;
-//   }
-
-// new_button.classList.add("active");
-
-// if (active_page != clicked_button_name) {
-//   // Actions for previous and next buttons & Navigate to page
-//   if (["Previous", "Next"].includes(clicked_button_name)) {
-//     // Find out the page to be displayed
-//     if (clicked_button_name == "Previous" && active_page > 1) {
-//       page_to_display = active_page - 1;
-//     } else if (
-//       clicked_button_name == "Next" &&
-//       active_page < (await eel.get_maximum_pages()())
-//     ) {
-//       page_to_display = active_page + 1;
-//     } else {
-//       page_to_display = active_page;
-//     }
-//   } else if (active_page != clicked_button_name) {
-//     page_to_display = clicked_button_name;
-//   }
-
-//   if (clicked_button_name != "...") {
-//     // Remove active from its class list
-//     active_button.classList.remove("active");
-//     // Set the next active page and display articles
-//     var page_to_activate = document.querySelectorAll(
-//       '[class*="page_' + page_to_display + '"]'
-//     )[0];
-//     page_to_activate.classList.add("active");
-//     display_articles(parseInt(page_to_display));
-//   }
-// }
-// }
+//       /* If the object is completely visible in the window, fade it in */
+//       if (bottom_of_window > bottom_of_object) {
+//         $(this).animate({ opacity: "1" }, 1200);
+//         /* 1500 is the duration of fade effect */
+//       }
+//     });
+//   });
+// });
