@@ -60,4 +60,9 @@ def get_buttons_text(clicked_page, max_pages):
         return ['Previous', '...', *range(clicked_page-3, clicked_page+4), '...', 'Next']
 
 
+@expose
+def save_saved_articles(article_id):
+    dbm.add_saved_article(article_id)
+
+
 start('index.html', size=WINDOW_SIZE)
