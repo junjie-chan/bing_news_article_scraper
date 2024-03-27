@@ -93,6 +93,14 @@ function get_page_no(button_element) {
   return parseInt(page_name.replace("page_", ""));
 }
 
+async function disable_button(button_index) {
+  get_element_by_class_name(button_index).classList.add("disabled");
+}
+
+async function enable_button(button_index) {
+  get_element_by_class_name(button_index).classList.remove("disabled");
+}
+
 function activate_button(new_button_index, current_active_button) {
   current_active_button.classList.remove("active");
   var button = get_element_by_class_name("index" + new_button_index);
@@ -107,21 +115,22 @@ async function move_buttons(clicked_button, maximum_pages) {
 
   for (let i = 0; i < li_tags.length; i++) {
     var li_tag = li_tags[i];
+    var li_class_list = li_tag.classList;
     // Change <li> text
     li_tag.querySelector("a").textContent = button_text[i];
     // Update class name page_
-    li_tag.classList.remove(get_element_class_name(li_tag, "page_"));
+    li_class_list.remove(get_element_class_name(li_tag, "page_"));
     if (button_text[i] == "...") {
-      li_tag.classList.add("page_ellipsis");
+      li_class_list.add("page_ellipsis");
     } else {
-      li_tag.classList.add("page_" + button_text[i]);
+      li_class_list.add("page_" + button_text[i]);
     }
     // 对省略号进行更新：disabled
-    if (li_tag.classList.contains("disabled")) {
-      li_tag.classList.remove("disabled");
+    if (li_class_list.contains("disabled")) {
+      li_class_list.remove("disabled");
     }
-    if (li_tag.querySelector("a").textContent == "...") {
-      li_tag.classList.add("disabled");
+    if (button_text[i] == "...") {
+      li_class_list.add("disabled");
     }
   }
 }
@@ -157,20 +166,38 @@ document.addEventListener("DOMContentLoaded", (event) => {
         if (index3_page_no == 2) {
           // 点击next
           if (clicked_text == "Next") {
-            // 前3页为激活状态
+            // 激活previous按钮
+            enable_button("index1");
+
+            // 前4页为激活状态
             if ([2, 3, 4, 5].includes(active_index_int)) {
               activate_button(active_index_int + 1, active_button);
             } // 第5页为激活状态
-            if (active_index_int == 6) {
+            else if (active_index_int == 6) {
               activate_button(6, active_button);
               move_buttons(get_element_by_class_name("index7"), maximum_pages);
             }
           }
           // 点击previous
           else if (clicked_text == "Previous") {
+            // 只要第一页不是激活状态
+            if (active_index_int > 2) {
+              // 第三页是激活状态，取消previous按钮激活状态
+              if (active_index_int == 3) {
+                disable_button("index1");
+              }
+              activate_button(active_index_int - 1, active_button);
+            }
           }
           // 其他
           else {
+            // 激活previous按钮，只要点击的不是第一页
+            enable_button("index1");
+            // 点击第一页的时候取消previous按钮激活状态
+            if (clicked_index_int == 2) {
+              disable_button("index1");
+            }
+
             // 点击前4页
             if ([2, 3, 4, 5].includes(clicked_index_int)) {
               activate_button(clicked_index_int, active_button);
@@ -186,10 +213,35 @@ document.addEventListener("DOMContentLoaded", (event) => {
         else if (index3_page_no == maximum_pages - 7) {
           // 点击next且当前激活页不是倒数第1页
           if (clicked_text == "Next" && active_index_int != 10) {
+            // 点击next且当前激活页是倒数第3页，取消next按钮激活状态
+            if (active_index_int == 9) {
+              disable_button("index11");
+            }
             activate_button(active_index_int + 1, active_button);
+          }
+          // 点击previous
+          else if (clicked_text == "Previous") {
+            // 激活next按钮
+            enable_button("index11");
+
+            // 后4页为激活状态
+            if ([7, 8, 9, 10].includes(active_index_int)) {
+              activate_button(active_index_int - 1, active_button);
+            } // 倒数第5页为激活状态
+            else if (active_index_int == 6) {
+              activate_button(6, active_button);
+              move_buttons(get_element_by_class_name("index5"), maximum_pages);
+            }
           }
           // 其他
           else {
+            // 激活和取消next按钮
+            if (clicked_index_int == 10) {
+              disable_button("index11");
+            } else {
+              enable_button("index11");
+            }
+
             // 点击后4页
             if ([7, 8, 9, 10].includes(clicked_index_int)) {
               activate_button(clicked_index_int, active_button);
@@ -208,12 +260,30 @@ document.addEventListener("DOMContentLoaded", (event) => {
             activate_button(6, active_button);
             move_buttons(get_element_by_class_name("index7"), maximum_pages);
           }
+          // 点击previous
+          else if (clicked_text == "Previous") {
+            activate_button(6, active_button);
+            move_buttons(get_element_by_class_name("index5"), maximum_pages);
+          }
           // 其他
           else {
-            // 点击左3页
-            if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
-              activate_button(6, active_button);
+            //跳转到第1页
+            if ([3, 4, 5].includes(get_page_no(clicked_button))) {
+              activate_button(get_page_no(clicked_button) + 1, active_button);
               move_buttons(clicked_button, maximum_pages);
+            }
+            // 跳转到最后1页
+            else if ([16, 17, 18].includes(get_page_no(clicked_button))) {
+              activate_button(get_page_no(clicked_button) - 10, active_button);
+              move_buttons(clicked_button, maximum_pages);
+            }
+            // 其他
+            else {
+              // 点击左右3页
+              if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
+                activate_button(6, active_button);
+                move_buttons(clicked_button, maximum_pages);
+              }
             }
           }
         }
