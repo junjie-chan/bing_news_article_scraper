@@ -61,8 +61,8 @@ def get_buttons_text(clicked_page, max_pages):
 
 
 @expose
-def save_saved_articles(article_id):
-    dbm.add_saved_article(article_id)
+def save_bookmark_articles(article_id):
+    dbm.add_bookmark_article(article_id)
 
 
 start('index.html', size=WINDOW_SIZE)
