@@ -1,3 +1,5 @@
+from math import ceil
+from pandas import read_excel, set_option
 from sqlite3 import connect
 
 
@@ -30,20 +32,15 @@ class DatabaseManager:
                                   LIMIT {limit} OFFSET {offset};''')
         return self.__cursor.fetchall()
 
-    def get_page_articles(self, page_num=1, limit=20):
-        return self.fetch_articles(page_num - 1, limit)
-
     def get_count(self):
         self.__cursor.execute('SELECT COUNT(*) FROM articles')
         return self.__cursor.fetchone()[0]
 
 
-conn = connect('bing_news_articles')
-c = conn.cursor()
-from pandas import read_excel, set_option
-from math import ceil
+# conn = connect('bing_news_articles')
+# c = conn.cursor()
 
-df = read_excel(r'D:\用户文档转移\Desktop\Bing News API\bing_news_articles_v2.xlsx', usecols='A,B,C,F,G,H')
-df.to_sql('articles', con=conn, if_exists='append', index=False)
+# df = read_excel(r'D:\用户文档转移\Desktop\Bing News API\bing_news_articles_v2.xlsx', usecols='A,B,C,F,G,H')
+# df.to_sql('articles', con=conn, if_exists='append', index=False)
 
-dm = DatabaseManager()
+# dm = DatabaseManager()
