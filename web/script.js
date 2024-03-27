@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     ) {
       e.preventDefault();
       var article_id = e.target.closest(".article_block").getAttribute("id");
-      eel.save_saved_articles(article_id);
+      eel.save_bookmark_articles(article_id);
     }
     // If a pagination button is clicked
     else if (e.target.matches(".pagination .page-link")) {
