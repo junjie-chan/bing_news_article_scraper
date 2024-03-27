@@ -67,7 +67,7 @@ $(document).ready(function () {
 
 // Load Content
 display_sidebar();
-// display_articles();
+display_articles();
 display_next_page_buttons();
 
 // 翻页处理
@@ -105,6 +105,12 @@ function activate_button(new_button_index, current_active_button) {
   current_active_button.classList.remove("active");
   var button = get_element_by_class_name("index" + new_button_index);
   button.classList.add("active");
+
+  // Display Page Content
+  var page_no = parseInt(
+    get_element_class_name(button, "page_").replace("page_", "")
+  );
+  display_articles(page_no);
 }
 
 async function move_buttons(clicked_button, maximum_pages) {
@@ -174,8 +180,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
               activate_button(active_index_int + 1, active_button);
             } // 第5页为激活状态
             else if (active_index_int == 6) {
+              await move_buttons(
+                get_element_by_class_name("index7"),
+                maximum_pages
+              );
               activate_button(6, active_button);
-              move_buttons(get_element_by_class_name("index7"), maximum_pages);
             }
           }
           // 点击previous
@@ -204,8 +213,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
             // 点击其他页
             else if ([6, 7, 8, 9].includes(clicked_index_int)) {
+              // 运行完move_buttons再运行activate_button
+              await move_buttons(clicked_button, maximum_pages);
               activate_button(6, active_button);
-              move_buttons(clicked_button, maximum_pages);
             }
           }
         }
@@ -229,8 +239,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
               activate_button(active_index_int - 1, active_button);
             } // 倒数第5页为激活状态
             else if (active_index_int == 6) {
+              await move_buttons(
+                get_element_by_class_name("index5"),
+                maximum_pages
+              );
               activate_button(6, active_button);
-              move_buttons(get_element_by_class_name("index5"), maximum_pages);
             }
           }
           // 其他
@@ -248,8 +261,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
             // 点击其他页
             else if ([3, 4, 5, 6].includes(clicked_index_int)) {
+              await move_buttons(clicked_button, maximum_pages);
               activate_button(6, active_button);
-              move_buttons(clicked_button, maximum_pages);
             }
           }
         }
@@ -257,32 +270,38 @@ document.addEventListener("DOMContentLoaded", (event) => {
         else {
           // 点击next
           if (clicked_text == "Next") {
+            await move_buttons(
+              get_element_by_class_name("index7"),
+              maximum_pages
+            );
             activate_button(6, active_button);
-            move_buttons(get_element_by_class_name("index7"), maximum_pages);
           }
           // 点击previous
           else if (clicked_text == "Previous") {
+            await move_buttons(
+              get_element_by_class_name("index5"),
+              maximum_pages
+            );
             activate_button(6, active_button);
-            move_buttons(get_element_by_class_name("index5"), maximum_pages);
           }
           // 其他
           else {
             //跳转到第1页
             if ([3, 4, 5].includes(get_page_no(clicked_button))) {
+              await move_buttons(clicked_button, maximum_pages);
               activate_button(get_page_no(clicked_button) + 1, active_button);
-              move_buttons(clicked_button, maximum_pages);
             }
             // 跳转到最后1页
             else if ([16, 17, 18].includes(get_page_no(clicked_button))) {
+              await move_buttons(clicked_button, maximum_pages);
               activate_button(get_page_no(clicked_button) - 10, active_button);
-              move_buttons(clicked_button, maximum_pages);
             }
             // 其他
             else {
               // 点击左右3页
               if ([3, 4, 5, 7, 8, 9].includes(clicked_index_int)) {
+                await move_buttons(clicked_button, maximum_pages);
                 activate_button(6, active_button);
-                move_buttons(clicked_button, maximum_pages);
               }
             }
           }
