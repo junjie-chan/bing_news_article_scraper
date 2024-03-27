@@ -39,23 +39,6 @@ function load_url(url) {
   window.open(url, "_blank");
 }
 
-// $(document).ready(function () {
-//   /* Every time the window is scrolled ... */
-//   $(window).scroll(function () {
-//     /* Check the location of each desired element */
-//     $(".reveal").each(function (i) {
-//       var bottom_of_object = $(this).offset().top + $(this).outerHeight();
-//       var bottom_of_window = $(window).scrollTop() + $(window).height();
-
-//       /* If the object is completely visible in the window, fade it in */
-//       if (bottom_of_window > bottom_of_object) {
-//         $(this).animate({ opacity: "1" }, 1200);
-//         /* 1500 is the duration of fade effect */
-//       }
-//     });
-//   });
-// });
-
 // Get the class name that contains specific string of an element
 function get_element_class_name(element, name) {
   let classes = element.classList;
@@ -133,13 +116,19 @@ display_sidebar();
 display_articles();
 display_next_page_buttons();
 
-// Get the page button that was clicked
 document.addEventListener("DOMContentLoaded", (event) => {
-  // Actions after the click
+  // Detect click action
   document.body.addEventListener("click", async function (e) {
-    if (e.target.matches(".pagination .page-link")) {
+    // If a close button within the article block is clicked
+    if (
+      e.target.matches(".article_block .action_block i") ||
+      e.target.matches(".article_block .action_block .save_button")
+    ) {
+      var article_id = e.target.closest(".article_block").getAttribute("id");
+    }
+    // If a pagination button is clicked
+    else if (e.target.matches(".pagination .page-link")) {
       var maximum_pages = await eel.get_maximum_pages()();
-
       // Get the current active button
       var active_button = get_element_by_class_name("active");
       var active_index = get_element_class_name(active_button, "index");
@@ -298,3 +287,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 });
+
+// Scrolling Animation
+// $(document).ready(function () {
+//   /* Every time the window is scrolled ... */
+//   $(window).scroll(function () {
+//     /* Check the location of each desired element */
+//     $(".reveal").each(function (i) {
+//       var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+//       var bottom_of_window = $(window).scrollTop() + $(window).height();
+
+//       /* If the object is completely visible in the window, fade it in */
+//       if (bottom_of_window > bottom_of_object) {
+//         $(this).animate({ opacity: "1" }, 1200);
+//         /* 1500 is the duration of fade effect */
+//       }
+//     });
+//   });
+// });
