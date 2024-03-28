@@ -10,24 +10,27 @@ function display_sidebar() {
 
 // Display Article Blocks
 eel.expose(display_articles);
-function display_articles(page_no = 1) {
+function display_articles(articles_for = "results_container", page_no = 1) {
   // 调用 Python 中的 get_articles 函数，并使用 then 方法来处理返回的 Promise
-  eel.generate_page_article_blocks(page_no)(function (html_content) {
+  eel.generate_page_article_blocks(
+    page_no,
+    articles_for
+  )(function (html_content) {
     // 在 Promise 完成后，data 参数将包含 Python 函数的返回值
     // 现在你可以使用这个值在页面上显示文章
-    var articles_container =
-      document.getElementsByClassName("articles_container")[0];
-    articles_container.innerHTML = html_content;
+    var container = get_element_by_class_name(articles_for + "_articles");
+    container.innerHTML = html_content;
   });
 }
 
 // Display Next Page Buttons
 eel.expose(display_next_page_buttons);
-function display_next_page_buttons() {
-  eel.generate_page_buttons()(function (html_content) {
+function display_next_page_buttons(articles_for = "results_container") {
+  eel.generate_page_buttons(articles_for)(function (html_content) {
     // Find the container
-    var buttons_container =
-      document.getElementsByClassName("buttons_container")[0];
+    var buttons_container = get_element_by_class_name(
+      articles_for + "_buttons"
+    );
     // Add HTML codes
     buttons_container.innerHTML = html_content;
   });
@@ -133,11 +136,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
       show_section("results_container");
       display_articles();
       display_next_page_buttons();
-    } else if (
+    }
+    // If a bookmark button within the article block is clicked
+    else if (
       e.target.matches(".article_block .action_block i") ||
       e.target.matches(".article_block .action_block .save_button")
     ) {
-      // If a bookmark button within the article block is clicked
       e.preventDefault();
       var article_id = e.target.closest(".article_block").getAttribute("id");
       eel.save_bookmark_articles(article_id);
