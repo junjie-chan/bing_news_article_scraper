@@ -40,7 +40,7 @@ class DatabaseManager:
 
     @open_and_close_db
     def fetch_articles(self, articles_for='results_container', offset=0, limit=20):
-        where_clause = 'WHERE is_bookmarked = 1' if articles_for == 'bookmarks_container' else ''
+        where_clause = 'WHERE is_bookmarked = 1' if articles_for == 'bookmarks_container' else 'WHERE is_bookmarked = 0 AND is_in_bin = 0'
         self.__cursor.execute(f'''SELECT id, title, url, description, date, time, keyword 
                                   FROM articles
                                   {where_clause}
