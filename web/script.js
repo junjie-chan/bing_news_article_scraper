@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // If a bookmark button within the article block in "Results" section is clicked
     if (
       (e.target.matches(
-        ".results_container_articles .article_block .action_block i"
+        ".results_container_articles .article_block .action_block .fa-bookmark"
       ) ||
         e.target.matches(
           ".results_container_articles .article_block .action_block .save_button"
@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // If a bookmark button within the article block in "Bookmark" section is clicked
     else if (
       (e.target.matches(
-        ".bookmarks_container_articles .article_block .action_block i"
+        ".bookmarks_container_articles .article_block .action_block .fa-bookmark"
       ) ||
         e.target.matches(
           ".bookmarks_container_articles .article_block .action_block .save_button"
