@@ -124,14 +124,14 @@ function get_button_text(button) {
 
 // Load Content
 display_sidebar();
-display_articles();
-display_next_page_buttons();
 
 document.addEventListener("DOMContentLoaded", (event) => {
   // Detect click action, e stands for event
   document.body.addEventListener("click", async function (e) {
     // If the "Results" button within the sidebar is clicked
     if (e.target.matches(".results_button")) {
+      display_articles();
+      display_next_page_buttons();
       show_section("results_container");
       // get_element_by_class_name("results_container").style.display = block;
     } else if (
