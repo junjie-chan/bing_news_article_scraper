@@ -39,15 +39,22 @@ class DatabaseManager:
         self.__conn.commit()
 
     @open_and_close_db
-    def fetch_articles(self, offset=0, limit=20):
-        self.__cursor.execute(f'''SELECT id, title, url, description, date, time, keyword FROM articles
+    def fetch_articles(self, articles_for='results_container', offset=0, limit=20):
+        where_clause = 'WHERE is_bookmarked = 1' if articles_for == 'bookmarks_container' else ''
+        self.__cursor.execute(f'''SELECT id, title, url, description, date, time, keyword 
+                                  FROM articles
+                                  {where_clause}
                                   ORDER BY date ASC, time ASC
                                   LIMIT {limit} OFFSET {offset};''')
         return self.__cursor.fetchall()
 
     @open_and_close_db
-    def get_count(self):
-        self.__cursor.execute('SELECT COUNT(*) FROM articles')
+    def get_count(self, articles_for="results_container"):
+        if articles_for == "results_container":
+            self.__cursor.execute('SELECT COUNT(*) FROM articles')
+        elif articles_for == "bookmarks_container":
+            self.__cursor.execute('''SELECT COUNT(*) FROM articles 
+                                     WHERE is_bookmarked = 1''')
         return self.__cursor.fetchone()[0]
 
     @open_and_close_db
@@ -58,13 +65,7 @@ class DatabaseManager:
                                ''')
         self.__conn.commit()
 
-    @open_and_close_db
-    def get_bookmark_articles(self):
-        self.__cursor.execute('''SELECT * FROM articles
-                                 WHERE is_bookmarked = 1;''')
-        return self.__cursor.fetchall()
 
-
-dbm = DatabaseManager()
+# dbm = DatabaseManager()
 # dbm.add_saved_article('32')
-print(dbm.get_bookmark_articles())
+# print(dbm.get_bookmark_articles())
