@@ -10,7 +10,7 @@
     --sidebar_title_color:#c5383d;
     /* --sidebar_option_animation_color:#ee3a4054; */
     --sidebar_option_animation_color:rgb(52, 52, 52);
-    --sidebar_width:220px;
+    --sidebar_width:225px;
     --sidebar_title_font_size:20px;
     --sidebar_navigation_font_size:16px;
 }
@@ -66,6 +66,7 @@ body{
 .sidebar_navigation li .fa {
     margin-right: 10px;
     width: 20px;
+    text-align: center;
 }
 .sidebar_navigation li a:active,
 .sidebar_navigation li a:hover,
