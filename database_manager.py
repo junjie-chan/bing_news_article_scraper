@@ -65,6 +65,14 @@ class DatabaseManager:
                                ''')
         self.__conn.commit()
 
+    @open_and_close_db
+    def remove_bookmark_article(self, article_id):
+        self.__cursor.execute(f'''UPDATE articles
+                                  SET is_bookmarked = 0
+                                  WHERE id = {article_id};
+                               ''')
+        self.__conn.commit()
+
 
 # dbm = DatabaseManager()
 # dbm.add_saved_article('32')
