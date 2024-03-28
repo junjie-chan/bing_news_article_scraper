@@ -10,14 +10,14 @@ function display_sidebar() {
 
 // Display Article Blocks
 eel.expose(display_articles);
-function display_articles(articles_for = "results_container", page_no = 1) {
+function display_articles(articles_for, page_no = 1) {
   // 调用 Python 中的 get_articles 函数，并使用 then 方法来处理返回的 Promise
   eel.generate_page_article_blocks(
     page_no,
     articles_for
   )(function (html_content) {
     // 在 Promise 完成后，data 参数将包含 Python 函数的返回值
-    // 现在你可以使用这个值在页面上显示文章
+
     var container = get_element_by_class_name(articles_for + "_articles");
     container.innerHTML = html_content;
   });
@@ -78,11 +78,11 @@ function activate_button(new_button_index, current_active_button) {
   var page_no = parseInt(
     get_element_class_name(button, "page_").replace("page_", "")
   );
-  display_articles(page_no);
+  display_articles(articles_for, page_no);
 }
 
 async function move_buttons(clicked_button, maximum_pages) {
-  var ul = document.querySelector("div.buttons_container > ul");
+  var ul = document.querySelector("." + articles_for + "_buttons > ul");
   var li_tags = ul.querySelectorAll("li");
   var page_no = get_page_no(clicked_button);
   var button_text = await eel.get_buttons_text(page_no, maximum_pages)();
@@ -128,23 +128,28 @@ function get_button_text(button) {
 // Load Content
 display_sidebar();
 
+var articles_for = null;
 document.addEventListener("DOMContentLoaded", (event) => {
   // Detect click action, e stands for event
   document.body.addEventListener("click", async function (e) {
     // If the "Results" button within the sidebar is clicked
     if (e.target.matches(".results_button")) {
-      show_section("results_container");
-      display_articles();
-      display_next_page_buttons();
+      articles_for = "results_container";
+      show_section(articles_for);
+      display_articles(articles_for);
+      display_next_page_buttons(articles_for);
     }
     // If the "Bookmarks" button within the sidebar is clicked
     else if (e.target.matches(".bookmarks_button")) {
-      show_section("bookmarks_container");
-      display_articles("bookmarks_container");
-      display_next_page_buttons("bookmarks_container");
+      articles_for = "bookmarks_container";
+      show_section(articles_for);
+      display_articles(articles_for);
+      display_next_page_buttons(articles_for);
     }
+    console.log("current articles for: " + articles_for);
+
     // If a bookmark button within the article block is clicked
-    else if (
+    if (
       e.target.matches(
         ".results_container_articles .article_block .action_block i"
       ) ||
@@ -158,8 +163,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
       // Remove the article
       article_block.remove();
     }
+
     // If a pagination button is clicked
-    else if (e.target.matches(".pagination .page-link")) {
+    if (e.target.matches(".pagination .page-link")) {
       var maximum_pages = await eel.get_maximum_pages()();
       // Get the current active button
       var active_button = get_element_by_class_name("active");
