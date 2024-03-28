@@ -228,6 +228,7 @@ body{
     background-color: var(--article_block_background_color);
     color: var(--sidebar_text_color);
     border-color: transparent;
+    cursor: pointer;
 }
 *:focus {
     outline: none !important;
