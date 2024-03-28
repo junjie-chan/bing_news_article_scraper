@@ -27,8 +27,9 @@ def generate_sidebar_code():
 
 
 @expose
-def generate_page_article_blocks(page_no=1, articles_per_page=ARTICLES_PER_PAGE):
-    articles = DataFrame(dbm.fetch_articles(page_no-1, articles_per_page))
+def generate_page_article_blocks(page_no=1, articles_for='results_container', articles_per_page=ARTICLES_PER_PAGE):
+    articles = DataFrame(dbm.fetch_articles(
+        articles_for, page_no-1, articles_per_page))
     articles.columns = ['id', 'title', 'url',
                         'description', 'date', 'time', 'keyword']
     articles = articles.to_dict(orient='records')
@@ -36,13 +37,14 @@ def generate_page_article_blocks(page_no=1, articles_per_page=ARTICLES_PER_PAGE)
 
 
 @expose
-def get_maximum_pages():
-    return ceil(dbm.get_count()/ARTICLES_PER_PAGE)
+def get_maximum_pages(articles_for="results_container"):
+    return ceil(dbm.get_count(articles_for)/ARTICLES_PER_PAGE)
 
 
 @expose
-def generate_page_buttons(starting_page=1):
-    num_of_page = get_maximum_pages()
+def generate_page_buttons(articles_for="results_container", starting_page=1):
+    num_of_page = get_maximum_pages(articles_for)
+    print(num_of_page)
     tags = get_buttons_text(starting_page, num_of_page)
     return run_template('next_page_template.jinja', tags)
 
