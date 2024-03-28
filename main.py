@@ -51,15 +51,20 @@ def generate_page_buttons(articles_for="results_container", starting_page=1):
 
 @expose
 def get_buttons_text(clicked_page, max_pages):
-    # 最前位置
-    if clicked_page <= 5:
-        return ['Previous', *range(1, 9), '...', 'Next']
-    # 最后位置
-    elif clicked_page >= max_pages-4:
-        return ['Previous', '...', *range(max_pages-7, max_pages+1), 'Next']
-    # 其他中间位置
+    if max_pages == 1:
+        return [1]
+    elif max_pages > 1 and max_pages < 9:
+        return ['Previous', *range(1, max_pages+1), 'Next']
     else:
-        return ['Previous', '...', *range(clicked_page-3, clicked_page+4), '...', 'Next']
+        # 最前位置
+        if clicked_page <= 5:
+            return ['Previous', *range(1, 9), '...', 'Next']
+        # 最后位置
+        elif clicked_page >= max_pages-4:
+            return ['Previous', '...', *range(max_pages-7, max_pages+1), 'Next']
+        # 其他中间位置
+        else:
+            return ['Previous', '...', *range(clicked_page-3, clicked_page+4), '...', 'Next']
 
 
 @expose
