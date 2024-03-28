@@ -157,27 +157,41 @@ document.addEventListener("DOMContentLoaded", (event) => {
       display_next_page_buttons(articles_for);
     }
 
-    // If a bookmark button within the article block is clicked
+    // If a bookmark button within the article block in "Results" section is clicked
     if (
-      e.target.matches(
-        ".bookmarks_container_articles .article_block .action_block i"
+      (e.target.matches(
+        ".results_container_articles .article_block .action_block i"
       ) ||
-      e.target.matches(
-        ".bookmarks_container_articles .article_block .action_block .save_button"
-      )
+        e.target.matches(
+          ".results_container_articles .article_block .action_block .save_button"
+        )) &&
+      articles_for == "results_container"
     ) {
+      // 如果当前展示的是收藏页则将其移除收藏页
       e.preventDefault();
       // 获取对应文章的ID
       var article_block = e.target.closest(".article_block");
       var article_id = article_block.getAttribute("id");
+      eel.save_bookmark_articles(article_id);
+      // Remove the article
+      article_block.remove();
+    }
+    // If a bookmark button within the article block in "Bookmark" section is clicked
+    else if (
+      (e.target.matches(
+        ".bookmarks_container_articles .article_block .action_block i"
+      ) ||
+        e.target.matches(
+          ".bookmarks_container_articles .article_block .action_block .save_button"
+        )) &&
+      articles_for == "bookmarks_container"
+    ) {
       // 如果当前展示的是收藏页则将其移除收藏页
-      if (articles_for == "bookmarks_container") {
-        eel.cancel_bookmark_articles(article_id);
-      }
-      // 否则将其添加到收藏页
-      else {
-        eel.save_bookmark_articles(article_id);
-      }
+      e.preventDefault();
+      // 获取对应文章的ID
+      var article_block = e.target.closest(".article_block");
+      var article_id = article_block.getAttribute("id");
+      eel.cancel_bookmark_articles(article_id);
       // Remove the article
       article_block.remove();
     }
