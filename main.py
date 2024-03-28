@@ -44,7 +44,6 @@ def get_maximum_pages(articles_for="results_container"):
 @expose
 def generate_page_buttons(articles_for="results_container", starting_page=1):
     num_of_page = get_maximum_pages(articles_for)
-    print(num_of_page)
     tags = get_buttons_text(starting_page, num_of_page)
     return run_template('next_page_template.jinja', tags)
 

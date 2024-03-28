@@ -137,6 +137,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
       display_articles();
       display_next_page_buttons();
     }
+    // If the "Results" button within the sidebar is clicked
+    else if (e.target.matches(".bookmarks_button")) {
+      show_section("bookmarks_container");
+      display_articles("bookmarks_container");
+      display_next_page_buttons("bookmarks_container");
+    }
     // If a bookmark button within the article block is clicked
     else if (
       e.target.matches(".article_block .action_block i") ||
