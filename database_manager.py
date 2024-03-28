@@ -43,4 +43,5 @@ class DatabaseManager:
 # df = read_excel(r'D:\用户文档转移\Desktop\Bing News API\bing_news_articles_v2.xlsx', usecols='A,B,C,F,G,H')
 # df.to_sql('articles', con=conn, if_exists='append', index=False)
 
+
 # dm = DatabaseManager()

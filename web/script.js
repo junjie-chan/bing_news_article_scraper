@@ -15,10 +15,9 @@ function display_articles(page_no = 1) {
   eel.generate_page_article_blocks(page_no)(function (html_content) {
     // 在 Promise 完成后，data 参数将包含 Python 函数的返回值
     // 现在你可以使用这个值在页面上显示文章
-    var inner_container =
+    var articles_container =
       document.getElementsByClassName("articles_container")[0];
-    // inner_container.insertAdjacentHTML("afterbegin", html_content);
-    inner_container.innerHTML = html_content;
+    articles_container.innerHTML = html_content;
   });
 }
 
@@ -107,6 +106,18 @@ async function move_buttons(clicked_button, maximum_pages) {
   }
 }
 
+async function show_section(container_name) {
+  var inner_container = get_element_by_class_name("inner_container");
+  var divs = inner_container.querySelectorAll(":scope > div");
+  divs.forEach(function (div) {
+    if (div.classList.contains(container_name)) {
+      div.style.display = "block";
+    } else {
+      div.style.display = "none";
+    }
+  });
+}
+
 function get_button_text(button) {
   return button.querySelector("a").textContent;
 }
@@ -117,13 +128,17 @@ display_articles();
 display_next_page_buttons();
 
 document.addEventListener("DOMContentLoaded", (event) => {
-  // Detect click action
+  // Detect click action, e stands for event
   document.body.addEventListener("click", async function (e) {
-    // If a close button within the article block is clicked
-    if (
+    // If the "Results" button within the sidebar is clicked
+    if (e.target.matches(".results_button")) {
+      show_section("results_container");
+      // get_element_by_class_name("results_container").style.display = block;
+    } else if (
       e.target.matches(".article_block .action_block i") ||
       e.target.matches(".article_block .action_block .save_button")
     ) {
+      // If a bookmark button within the article block is clicked
       e.preventDefault();
       var article_id = e.target.closest(".article_block").getAttribute("id");
       eel.save_bookmark_articles(article_id);
