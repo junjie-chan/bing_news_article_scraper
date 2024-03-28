@@ -17,9 +17,21 @@ function display_articles(articles_for, page_no = 1) {
     articles_for
   )(function (html_content) {
     // 在 Promise 完成后，data 参数将包含 Python 函数的返回值
-
     var container = get_element_by_class_name(articles_for + "_articles");
     container.innerHTML = html_content;
+
+    // 如果显示的是收藏页，修改全部书签图标的颜色，并清空特效
+    if (articles_for == "bookmarks_container") {
+      var save_buttons = document.querySelectorAll(
+        ".bookmarks_container_articles .save_button"
+      );
+      save_buttons.forEach(function (button) {
+        button.style.color = "rgb(240, 156, 0)";
+        button.style.transform = "none";
+        button.style.cursor = "default";
+        button.title = "";
+      });
+    }
   });
 }
 
@@ -146,16 +158,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
       display_articles(articles_for);
       display_next_page_buttons(articles_for);
     }
-    console.log("current articles for: " + articles_for);
 
     // If a bookmark button within the article block is clicked
+    // 如果当前展示的是收藏页则无效
     if (
-      e.target.matches(
+      (e.target.matches(
         ".results_container_articles .article_block .action_block i"
       ) ||
-      e.target.matches(
-        ".results_container_articles .article_block .action_block .save_button"
-      )
+        e.target.matches(
+          ".results_container_articles .article_block .action_block .save_button"
+        )) &&
+      articles_for != "bookmarks_container"
     ) {
       e.preventDefault();
       var article_block = e.target.closest(".article_block");
