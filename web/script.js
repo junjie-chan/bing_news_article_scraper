@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       display_articles();
       display_next_page_buttons();
     }
-    // If the "Results" button within the sidebar is clicked
+    // If the "Bookmarks" button within the sidebar is clicked
     else if (e.target.matches(".bookmarks_button")) {
       show_section("bookmarks_container");
       display_articles("bookmarks_container");
@@ -145,12 +145,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
     // If a bookmark button within the article block is clicked
     else if (
-      e.target.matches(".article_block .action_block i") ||
-      e.target.matches(".article_block .action_block .save_button")
+      e.target.matches(
+        ".results_container_articles .article_block .action_block i"
+      ) ||
+      e.target.matches(
+        ".results_container_articles .article_block .action_block .save_button"
+      )
     ) {
       e.preventDefault();
-      var article_id = e.target.closest(".article_block").getAttribute("id");
-      eel.save_bookmark_articles(article_id);
+      var article_block = e.target.closest(".article_block");
+      eel.save_bookmark_articles(article_block.getAttribute("id"));
+      // Remove the article
+      article_block.remove();
     }
     // If a pagination button is clicked
     else if (e.target.matches(".pagination .page-link")) {
