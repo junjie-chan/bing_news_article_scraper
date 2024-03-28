@@ -140,9 +140,13 @@ body{
     padding: 0 15px;
     text-align: center;
 }
-.save_button:hover,
+.save_button:hover{
+    color: rgb(240, 156, 0);
+    transform: scale(1.7);
+}
 .close_button:hover{
-    color: var(--sidebar_option_animation_color);
+    color: rgb(126, 1, 1);
+    transform: scale(1.7);
 }
 
 
@@ -196,9 +200,11 @@ body{
     padding: 5px 12px;
 }
 .time_more_block button:hover{
-    background-color: var(--sidebar_option_animation_color);
+    /* background-color: var(--sidebar_option_animation_color); */
+    background-color: rgb(7, 112, 204);
+    transform: scale(1.1);
     color: var(--sidebar_text_color);
-    font-weight: 500;
+    font-weight: 550;
 }
 .dates{
     display: flex;
@@ -208,6 +214,7 @@ body{
     display: flex;
     justify-content: right;
 }
+
 
 
 /* Page Buttons Styling */
