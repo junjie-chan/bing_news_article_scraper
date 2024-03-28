@@ -29,7 +29,7 @@ function display_next_page_buttons() {
     var buttons_container =
       document.getElementsByClassName("buttons_container")[0];
     // Add HTML codes
-    buttons_container.insertAdjacentHTML("afterbegin", html_content);
+    buttons_container.innerHTML = html_content;
   });
 }
 
@@ -131,13 +131,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // If the "Results" button within the sidebar is clicked
     if (e.target.matches(".results_button")) {
       show_section("results_container");
-      if (
-        get_element_by_class_name("articles_container").innerHTML == "" &&
-        get_element_by_class_name("buttons_container").innerHTML == ""
-      ) {
-        display_articles();
-        display_next_page_buttons();
-      }
+      display_articles();
+      display_next_page_buttons();
     } else if (
       e.target.matches(".article_block .action_block i") ||
       e.target.matches(".article_block .action_block .save_button")
