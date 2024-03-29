@@ -86,7 +86,7 @@ class DatabaseManager:
     @open_and_close_db
     def move_article_to_bin(self, article_id):
         self.__cursor.execute(f'''UPDATE articles
-                                  SET is_in_bin = 1
+                                  SET is_in_bin = 1, is_bookmarked = 0
                                   WHERE id = {article_id};
                                ''')
         self.__conn.commit()
