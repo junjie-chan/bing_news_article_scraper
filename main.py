@@ -76,4 +76,9 @@ def cancel_bookmark_articles(article_id):
     dbm.remove_bookmark_article(article_id)
 
 
+@expose
+def add_articles_to_bin(article_id):
+    dbm.move_article_to_bin(article_id)
+
+
 start('index.html', size=WINDOW_SIZE)
