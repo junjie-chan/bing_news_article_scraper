@@ -28,12 +28,18 @@ def generate_sidebar_code():
 
 @expose
 def generate_page_article_blocks(page_no=1, articles_for='results_container', articles_per_page=ARTICLES_PER_PAGE):
-    articles = DataFrame(dbm.fetch_articles(
-        articles_for, page_no-1, articles_per_page))
-    articles.columns = ['id', 'title', 'url',
-                        'description', 'date', 'time', 'keyword']
-    articles = articles.to_dict(orient='records')
-    return run_template('article_template.jinja', articles)
+    num_of_page = get_maximum_pages(articles_for)
+    if num_of_page:
+        articles = DataFrame(dbm.fetch_articles(
+            articles_for, page_no-1, articles_per_page))
+        articles.columns = ['id', 'title', 'url',
+                            'description', 'date', 'time', 'keyword']
+        articles = articles.to_dict(orient='records')
+        return run_template('article_template.jinja', articles)
+    return '''<div class="no_articles_found">
+                <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
+                <p class="no_articles_notice">No articles are found for this section!</p>
+              </div>'''
 
 
 @expose
@@ -44,8 +50,10 @@ def get_maximum_pages(articles_for="results_container"):
 @expose
 def generate_page_buttons(articles_for="results_container", starting_page=1):
     num_of_page = get_maximum_pages(articles_for)
-    tags = get_buttons_text(starting_page, num_of_page)
-    return run_template('next_page_template.jinja', tags)
+    if num_of_page:
+        tags = get_buttons_text(starting_page, num_of_page)
+        return run_template('next_page_template.jinja', tags)
+    return ''
 
 
 @expose
