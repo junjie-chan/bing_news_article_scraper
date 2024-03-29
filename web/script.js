@@ -156,6 +156,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
       display_articles(articles_for);
       display_next_page_buttons(articles_for);
     }
+    // If the "Trash Bin" button within the sidebar is clicked
+    else if (e.target.matches(".bin_button")) {
+      articles_for = "bin_container";
+      show_section(articles_for);
+      display_articles(articles_for);
+      display_next_page_buttons(articles_for);
+    }
 
     // If a bookmark button within the article block in "Results" section is clicked
     if (
@@ -192,6 +199,30 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var article_block = e.target.closest(".article_block");
       var article_id = article_block.getAttribute("id");
       eel.cancel_bookmark_articles(article_id);
+      // Remove the article
+      article_block.remove();
+    }
+    // If a close button within the article block in "Results" or "Bookmark" sections is clicked
+    else if (
+      e.target.matches(
+        ".bookmarks_container_articles .article_block .action_block .fa-times"
+      ) ||
+      e.target.matches(
+        ".bookmarks_container_articles .article_block .action_block .close_button"
+      ) ||
+      e.target.matches(
+        ".results_container_articles .article_block .action_block .fa-times"
+      ) ||
+      e.target.matches(
+        ".results_container_articles .article_block .action_block .close_button"
+      )
+    ) {
+      // 移除文章到垃圾箱
+      e.preventDefault();
+      // 获取对应文章的ID
+      var article_block = e.target.closest(".article_block");
+      var article_id = article_block.getAttribute("id");
+      eel.add_articles_to_bin(article_id);
       // Remove the article
       article_block.remove();
     }
