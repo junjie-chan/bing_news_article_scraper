@@ -238,3 +238,13 @@ body{
 .buttons_container li a {
     cursor: pointer;
 }
+
+.no_articles_found{
+    color: var(--sidebar_text_color);
+    font-size: 2rem;
+    text-align: center;
+    padding-top: 70px;
+}
+.no_articles_found p{
+    padding-top: 20px;
+}
