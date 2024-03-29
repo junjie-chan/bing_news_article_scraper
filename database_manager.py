@@ -39,15 +39,32 @@ class DatabaseManager:
         self.__conn.commit()
 
     @open_and_close_db
-    def fetch_articles(self, offset=0, limit=20):
-        self.__cursor.execute(f'''SELECT id, title, url, description, date, time, keyword FROM articles
+    def fetch_articles(self, articles_for='results_container', offset=0, limit=20):
+        if articles_for == "results_container":
+            where_clause = 'WHERE is_bookmarked = 0 AND is_in_bin = 0'
+        elif articles_for == "bookmarks_container":
+            where_clause = 'WHERE is_bookmarked = 1'
+        elif articles_for == "bin_container":
+            where_clause = 'WHERE is_in_bin = 1'
+
+        self.__cursor.execute(f'''SELECT id, title, url, description, date, time, keyword 
+                                  FROM articles
+                                  {where_clause}
                                   ORDER BY date ASC, time ASC
                                   LIMIT {limit} OFFSET {offset};''')
         return self.__cursor.fetchall()
 
     @open_and_close_db
-    def get_count(self):
-        self.__cursor.execute('SELECT COUNT(*) FROM articles')
+    def get_count(self, articles_for="results_container"):
+        if articles_for == "results_container":
+            where_clause = 'WHERE is_bookmarked = 0 AND is_in_bin = 0'
+        elif articles_for == "bookmarks_container":
+            where_clause = 'WHERE is_bookmarked = 1'
+        elif articles_for == "bin_container":
+            where_clause = 'WHERE is_in_bin = 1'
+
+        self.__cursor.execute(
+            f'''SELECT COUNT(*) FROM articles {where_clause}''')
         return self.__cursor.fetchone()[0]
 
     @open_and_close_db
@@ -63,6 +80,14 @@ class DatabaseManager:
         self.__cursor.execute('''SELECT * FROM articles
                                  WHERE is_bookmarked = 1;''')
         return self.__cursor.fetchall()
+
+    @open_and_close_db
+    def move_article_to_bin(self, article_id):
+        self.__cursor.execute(f'''UPDATE articles
+                                  SET is_in_bin = 1
+                                  WHERE id = {article_id};
+                               ''')
+        self.__conn.commit()
 
 
 dbm = DatabaseManager()
