@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     // If a pagination button is clicked
     if (e.target.matches(".pagination .page-link")) {
-      var maximum_pages = await eel.get_maximum_pages()();
+      var maximum_pages = await eel.get_maximum_pages(articles_for)();
       // Get the current active button
       var active_button = get_element_by_class_name("active");
       var active_index = get_element_class_name(active_button, "index");
