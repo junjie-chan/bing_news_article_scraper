@@ -142,11 +142,11 @@ body{
 }
 .save_button:hover{
     color: rgb(240, 156, 0);
-    transform: scale(1.7);
+    transform: scale(1.5);
 }
 .close_button:hover{
     color: rgb(126, 1, 1);
-    transform: scale(1.7);
+    transform: scale(1.5);
 }
 
 
@@ -202,7 +202,7 @@ body{
 .time_more_block button:hover{
     /* background-color: var(--sidebar_option_animation_color); */
     background-color: rgb(7, 112, 204);
-    transform: scale(1.1);
+    transform: scale(1.15);
     color: var(--sidebar_text_color);
     font-weight: 550;
 }
