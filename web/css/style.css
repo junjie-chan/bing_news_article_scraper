@@ -241,7 +241,7 @@ body{
 
 .no_articles_found{
     color: var(--sidebar_text_color);
-    font-size: 2rem;
+    font-size: 3.5rem;
     text-align: center;
     padding-top: 70px;
 }

@@ -146,23 +146,23 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // If the "Results" button within the sidebar is clicked
     if (e.target.matches(".results_button")) {
       articles_for = "results_container";
+      show_section(articles_for);
       display_articles(articles_for);
       display_next_page_buttons(articles_for);
-      show_section(articles_for);
     }
     // If the "Bookmarks" button within the sidebar is clicked
     else if (e.target.matches(".bookmarks_button")) {
       articles_for = "bookmarks_container";
+      show_section(articles_for);
       display_articles(articles_for);
       display_next_page_buttons(articles_for);
-      show_section(articles_for);
     }
     // If the "Trash Bin" button within the sidebar is clicked
     else if (e.target.matches(".bin_button")) {
       articles_for = "bin_container";
+      show_section(articles_for);
       display_articles(articles_for);
       display_next_page_buttons(articles_for);
-      show_section(articles_for);
     }
 
     // If a bookmark button within the article block in "Results" section is clicked
@@ -427,6 +427,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
 eel.expose(delete_article);
 function delete_article() {
   document.getElementById(to_delete_article_id).remove();
-  get_element_by_class_name("custom_modal").style.display = "none";
-  // eel.delete_articles_from_bin(to_delete_article_id);
+  eel.delete_articles_from_bin(to_delete_article_id);
+  // 如果删掉文章之后界面是空的，需要展示无文章提示
+  if (
+    get_element_by_class_name("bin_container_articles").innerHTML.trim() === ""
+  ) {
+    eel.generate_no_articles_message()(function (html_content) {
+      get_element_by_class_name("bin_container_articles").innerHTML =
+        html_content;
+    });
+    get_element_by_class_name("pagination").remove();
+  }
 }
