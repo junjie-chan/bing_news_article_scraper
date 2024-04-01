@@ -91,6 +91,12 @@ class DatabaseManager:
                                ''')
         self.__conn.commit()
 
+    @open_and_close_db
+    def delete_article(self, article_id):
+        self.__cursor.execute(f'''DELETE FROM articles
+                                  WHERE id = {article_id};
+                               ''')
+        self.__conn.commit()
 
 # dbm = DatabaseManager()
 # dbm.add_saved_article('32')
