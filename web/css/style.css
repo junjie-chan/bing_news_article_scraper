@@ -11,8 +11,8 @@
     /* --sidebar_option_animation_color:#ee3a4054; */
     --sidebar_option_animation_color:rgb(52, 52, 52);
     --sidebar_width:225px;
-    --sidebar_title_font_size:20px;
-    --sidebar_navigation_font_size:16px;
+    --sidebar_title_font_size:23px;
+    --sidebar_navigation_font_size:18px;
 }
 .content_container {
     padding: 50px 0 0 var(--sidebar_width);
@@ -154,7 +154,7 @@ body{
 .title_block{
     padding: 10px 0;
     color: var(--sidebar_text_color);
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
 }
 .text_ellipsis{
@@ -176,7 +176,7 @@ body{
 
 /* Description Styling */
 .description_block{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     color: var(--sidebar_text_color);
 }
@@ -209,31 +209,43 @@ body{
 .dates{
     display: flex;
     align-items: center;
+    padding: 0 15px;
+    font-size: 18px;
 }
 .read_more{
     display: flex;
     justify-content: right;
+    font-size: 18px;
+    line-height: 27px;
 }
 
 
 
 /* Page Buttons Styling */
 .page-link,.page-link:focus{
-    background-color: var(--sidebar_text_color);
-    border-color: transparent;
-    color: var(--article_block_background_color);
-    font-weight: 600;
+    background-color: var(--sidebar_text_color) !important;
+    border-color: transparent !important;
+    color: var(--article_block_background_color) !important;
+    font-weight: 600 !important;
 }
 .page-link:hover,.page-item.active .page-link{
-    background-color: var(--article_block_background_color);
-    color: var(--sidebar_text_color);
-    border-color: transparent;
-    cursor: pointer;
+    background-color: var(--article_block_background_color) !important;
+    color: var(--sidebar_text_color) !important;
+    border-color: transparent !important;
+    cursor: pointer !important;
+}
+.pagination>li>a {
+    padding: 10px 15px !important;
+    font-size: 16px !important;
 }
 *:focus {
     outline: none !important;
     box-shadow: none !important;
 }
+.disabled a{
+    background-color: white !important;
+}
+
 
 .buttons_container li a {
     cursor: pointer;
