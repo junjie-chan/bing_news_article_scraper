@@ -432,10 +432,14 @@ function delete_article() {
   if (
     get_element_by_class_name("bin_container_articles").innerHTML.trim() === ""
   ) {
-    eel.generate_no_articles_message()(function (html_content) {
+    eel.generate_no_articles_message()(async function (html_content) {
       get_element_by_class_name("bin_container_articles").innerHTML =
         html_content;
+      get_element_by_class_name("bin_container_buttons").innerHTML = "";
     });
+<<<<<<< Updated upstream
     get_element_by_class_name("pagination").innerHTML = "";
+=======
+>>>>>>> Stashed changes
   }
 }
