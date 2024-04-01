@@ -34,6 +34,7 @@ def generate_page_article_blocks(page_no=1, articles_for='results_container', ar
             articles_for, page_no-1, articles_per_page))
         articles.columns = ['id', 'title', 'url',
                             'description', 'date', 'time', 'keyword']
+        articles['articles_for'] = articles_for
         articles = articles.to_dict(orient='records')
         return run_template('article_template.jinja', articles)
     return '''<div class="no_articles_found">

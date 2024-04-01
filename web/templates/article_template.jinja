@@ -1,4 +1,4 @@
-{%for item in data%}
+{% for item in data %}
 <div class="article_block" id="{{item.id}}">
     <!-- Action Block -->
     <div class="action_block">
@@ -9,11 +9,18 @@
             </div>
         </a>
         <!-- Close Button -->
-        <a href="#">
-            <div class="close_button">
-                <i class="fa fa-times fa-lg" aria-hidden="true"></i>
-            </div>
-        </a>
+        {% if item.articles_for == 'bin_container'%}
+        <a href="#myModal" data-toggle="modal">
+
+            {% else %}
+            <a href="#">
+
+                {% endif %}
+                <div class="close_button">
+                    <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                </div>
+            </a>
+
     </div>
     <!-- Article Title -->
     <div class="title_block">
