@@ -242,9 +242,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var article_block = e.target.closest(".article_block");
       var article_id = article_block.getAttribute("id");
       to_delete_article_id = article_id;
-      // eel.add_articles_to_bin(article_id);
-      // // Remove the article
-      // article_block.remove();
     }
 
     // If a pagination button is clicked
@@ -426,3 +423,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 //     });
 //   });
 // });
+
+eel.expose(delete_article);
+function delete_article() {
+  document.getElementById(to_delete_article_id).remove();
+  get_element_by_class_name("custom_modal").style.display = "none";
+  // eel.delete_articles_from_bin(to_delete_article_id);
+}
