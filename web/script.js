@@ -202,6 +202,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       eel.cancel_bookmark_articles(article_id);
       // Remove the article
       article_block.remove();
+      check_last();
     }
     // If a close button within the article block in "Results" or "Bookmark" sections is clicked
     else if (
