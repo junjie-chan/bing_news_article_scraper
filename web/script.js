@@ -226,6 +226,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       eel.add_articles_to_bin(article_id);
       // Remove the article
       article_block.remove();
+      check_last();
     }
     // If a close button within the article block in "Trash Bin" section is clicked
     else if (
@@ -437,9 +438,22 @@ function delete_article() {
         html_content;
       get_element_by_class_name("bin_container_buttons").innerHTML = "";
     });
-<<<<<<< Updated upstream
-    get_element_by_class_name("pagination").innerHTML = "";
-=======
->>>>>>> Stashed changes
+  }
+}
+
+eel.expose(check_last);
+function check_last() {
+  if (articles_for == "bookmarks_container") {
+    if (
+      get_element_by_class_name(
+        "bookmarks_container_articles"
+      ).innerHTML.trim() === ""
+    ) {
+      eel.generate_no_articles_message()(async function (html_content) {
+        get_element_by_class_name("bookmarks_container_articles").innerHTML =
+          html_content;
+        get_element_by_class_name("bookmarks_container_buttons").innerHTML = "";
+      });
+    }
   }
 }
