@@ -436,6 +436,6 @@ function delete_article() {
       get_element_by_class_name("bin_container_articles").innerHTML =
         html_content;
     });
-    get_element_by_class_name("pagination").remove();
+    get_element_by_class_name("pagination").innerHTML = "";
   }
 }
