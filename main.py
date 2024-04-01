@@ -27,6 +27,14 @@ def generate_sidebar_code():
 
 
 @expose
+def generate_no_articles_message():
+    return '''<div class="no_articles_found">
+                <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
+                <p class="no_articles_notice">No articles are found for this section!</p>
+              </div>'''
+
+
+@expose
 def generate_page_article_blocks(page_no=1, articles_for='results_container', articles_per_page=ARTICLES_PER_PAGE):
     num_of_page = get_maximum_pages(articles_for)
     if num_of_page:
@@ -37,10 +45,7 @@ def generate_page_article_blocks(page_no=1, articles_for='results_container', ar
         articles['articles_for'] = articles_for
         articles = articles.to_dict(orient='records')
         return run_template('article_template.jinja', articles)
-    return '''<div class="no_articles_found">
-                <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
-                <p class="no_articles_notice">No articles are found for this section!</p>
-              </div>'''
+    return generate_no_articles_message()
 
 
 @expose
