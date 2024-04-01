@@ -89,4 +89,9 @@ def add_articles_to_bin(article_id):
     dbm.move_article_to_bin(article_id)
 
 
+@expose
+def delete_articles_from_bin(article_id):
+    dbm.delete_article(article_id)
+
+
 start('index.html', size=WINDOW_SIZE)
