@@ -265,23 +265,48 @@ document.addEventListener("DOMContentLoaded", (event) => {
         var index3 = get_element_by_class_name("index3");
         var index3_page_no = get_page_no(index3);
 
-        // 开始位置
+        // 处理页数不足9页的情况
+        if (maximum_pages > 1 && maximum_pages < 9) {
+          // 如果直接点击最后一页
+          if (clicked_index_int == maximum_pages + 1) {
+            activate_button(maximum_pages + 1, active_button);
+            disable_button("index" + (maximum_pages + 2));
+          }
+          // 如果当前激活的是最后一页而且点的不是next
+          else if (
+            active_index_int == maximum_pages + 1 &&
+            clicked_index_int != maximum_pages + 2
+          ) {
+            enable_button("index" + (maximum_pages + 2));
+          }
+        }
+
         if (index3_page_no == 2) {
+          // 开始位置
           // 点击next
           if (clicked_text == "Next") {
             // 激活previous按钮
             enable_button("index1");
 
-            // 前4页为激活状态
-            if ([2, 3, 4, 5].includes(active_index_int)) {
-              activate_button(active_index_int + 1, active_button);
-            } // 第5页为激活状态
-            else if (active_index_int == 6) {
-              await move_buttons(
-                get_element_by_class_name("index7"),
-                maximum_pages
-              );
-              activate_button(6, active_button);
+            // 处理页数不足9页的情况
+            if (maximum_pages > 1 && maximum_pages < 9) {
+              // 如果当前激活页是倒数第二页，激活下一页
+              if (active_index_int == maximum_pages) {
+                activate_button(active_index_int + 1, active_button);
+                disable_button("index" + (maximum_pages + 2));
+              }
+            } else {
+              // 前4页为激活状态
+              if ([2, 3, 4, 5].includes(active_index_int)) {
+                activate_button(active_index_int + 1, active_button);
+              } // 第5页为激活状态
+              else if (active_index_int == 6) {
+                await move_buttons(
+                  get_element_by_class_name("index7"),
+                  maximum_pages
+                );
+                activate_button(6, active_button);
+              }
             }
           }
           // 点击previous
