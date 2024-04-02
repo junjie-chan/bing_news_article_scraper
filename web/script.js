@@ -483,3 +483,11 @@ function check_last() {
     }
   }
 }
+
+document
+  .querySelector(".search_container i")
+  .addEventListener("click", function () {
+    var input = document.querySelector(".search_container input");
+    input.focus();
+    input.style.width = "600px";
+  });
