@@ -123,7 +123,10 @@ async function show_section(container_name) {
   var inner_container = get_element_by_class_name("inner_container");
   var divs = inner_container.querySelectorAll(":scope > div");
   divs.forEach(function (div) {
-    if (div.classList.contains(container_name)) {
+    if (
+      div.classList.contains(container_name) ||
+      InputDeviceInfo.classList.contains("search_container")
+    ) {
       div.style.display = "block";
     } else {
       div.style.display = "none";
