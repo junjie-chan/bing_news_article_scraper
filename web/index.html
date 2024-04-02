@@ -37,72 +37,77 @@
   <body>
     <div class="sidebar_container"></div>
 
-    <div class="content_container">
-      <div class="container-fluid">
-        <div class="inner_container">
-          <div class="search_container">
-            <div class="auxiliary_block">
-              <input
-                placeholder="Input a keyword here..."
-                class="js-search"
-                type="text"
-              />
+    <div class="scrollbar">
+      <div class="force_overflow">
+        <div class="content_container">
+          <div class="container-fluid">
+            <div class="inner_container">
+              <div class="search_container">
+                <div class="auxiliary_block">
+                  <input
+                    placeholder="Input a keyword here..."
+                    class="js-search"
+                    type="text"
+                  />
 
-              <i class="fa fa-search fa-lg search_icon"></i>
-            </div>
-            <div class="search_button">
-              <i
-                class="fa fa-arrow-circle-o-right fa-3x"
-                aria-hidden="true"
-              ></i>
-            </div>
-          </div>
+                  <i class="fa fa-search fa-lg search_icon"></i>
+                </div>
+                <div class="search_button">
+                  <i
+                    class="fa fa-arrow-circle-o-right fa-3x"
+                    aria-hidden="true"
+                    onclick="search()"
+                  ></i>
+                </div>
+              </div>
 
-          <div class="results_container">
-            <div class="results_container_articles"></div>
-            <div class="results_container_buttons"></div>
-          </div>
-          <div class="bookmarks_container">
-            <div class="bookmarks_container_articles"></div>
-            <div class="bookmarks_container_buttons"></div>
-          </div>
-          <div class="bin_container">
-            <div class="bin_container_articles"></div>
-            <div class="bin_container_buttons"></div>
-          </div>
+              <div class="results_container">
+                <div class="results_container_articles"></div>
+                <div class="results_container_buttons"></div>
+              </div>
+              <div class="bookmarks_container">
+                <div class="bookmarks_container_articles"></div>
+                <div class="bookmarks_container_buttons"></div>
+              </div>
+              <div class="bin_container">
+                <div class="bin_container_articles"></div>
+                <div class="bin_container_buttons"></div>
+              </div>
 
-          <!-- Modal HTML -->
-          <div id="myModal" class="modal fade custom_modal">
-            <div class="modal-dialog modal-confirm">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <div class="icon-box">
-                    <i class="material-icons">&#xE5CD;</i>
+              <!-- Modal HTML -->
+              <div id="myModal" class="modal fade custom_modal">
+                <div class="modal-dialog modal-confirm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="icon-box">
+                        <i class="material-icons">&#xE5CD;</i>
+                      </div>
+                      <h4 class="modal-title">Are you sure?</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>
+                        Do you really want to delete this article? This process
+                        cannot be undone.
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-info"
+                        data-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        onclick="delete_article()"
+                        data-dismiss="modal"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                  <h4 class="modal-title">Are you sure?</h4>
-                </div>
-                <div class="modal-body">
-                  <p>
-                    Do you really want to delete this article? This process
-                    cannot be undone.
-                  </p>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-info"
-                    data-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    onclick="delete_article()"
-                    data-dismiss="modal"
-                  >
-                    Delete
-                  </button>
                 </div>
               </div>
             </div>
