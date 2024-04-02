@@ -419,13 +419,14 @@ body{
 .search_container button:hover{
     color: var(--sidebar_text_color);
 }
-
+input[type=text]::placeholder{
+    text-transform: uppercase;
+}
 input[type=text] {
     position: relative;
     padding: 15px 40px 15px 15px;
     width: 50px;
     color: #525252;
-    text-transform: uppercase;
     font-size: 16px;
     font-weight: 100;
     letter-spacing: 2px;
@@ -435,6 +436,7 @@ input[type=text] {
     transition: width 0.4s ease;
     outline: none;
     margin-right: -23px;
+    text-transform: none;
 
     &:focus {
         width: 600px;
