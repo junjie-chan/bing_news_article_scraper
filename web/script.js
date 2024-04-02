@@ -140,6 +140,10 @@ function get_button_text(button) {
 
 // Load Content
 display_sidebar();
+articles_for = "results_container";
+show_section(articles_for);
+display_articles(articles_for);
+display_next_page_buttons(articles_for);
 
 var to_delete_article_id = "";
 var articles_for = null;
