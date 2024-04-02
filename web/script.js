@@ -505,3 +505,8 @@ function search() {
 function animation() {
   $(".search_container").slideToggle(300);
 }
+
+// 默认隐藏搜索框
+$(document).ready(function () {
+  $(".search_container").hide();
+});
