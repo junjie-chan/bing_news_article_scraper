@@ -125,7 +125,7 @@ async function show_section(container_name) {
   divs.forEach(function (div) {
     if (
       div.classList.contains(container_name) ||
-      InputDeviceInfo.classList.contains("search_container")
+      div.classList.contains("search_container")
     ) {
       div.style.display = "block";
     } else {
