@@ -484,10 +484,18 @@ function check_last() {
   }
 }
 
-document
-  .querySelector(".search_container i")
-  .addEventListener("click", function () {
-    var input = document.querySelector(".search_container input");
-    input.focus();
-    input.style.width = "600px";
-  });
+document.addEventListener("click", function (event) {
+  var search_box = document.querySelector(".js-search");
+  var search_input = document.querySelector(".search_container input");
+  var search_icon = document.querySelector(".search_container i");
+
+  if ([search_icon, search_box].includes(event.target)) {
+    search_input.focus();
+    search_input.style.width = "600px";
+  }
+  // 检查点击的目标是否为搜索框或搜索图标，如果是，则不执行取消焦点的操作,如果搜索框为空，则取消焦点
+  else if (event.target != search_icon && search_input.value.trim() === "") {
+    search_input.style.width = "50px"; // 将输入框宽度恢复为原始值
+    search_input.blur(); // 取消焦点
+  }
+});
