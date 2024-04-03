@@ -3,7 +3,7 @@ from random import randint
 from requests import get
 from time import sleep
 from math import ceil
-from eel import init, expose
+from eel import init, expose, start
 from database_manager import DatabaseManager
 from jinja2 import Environment, FileSystemLoader
 from pandas import DataFrame, set_option, concat, merge
@@ -43,7 +43,7 @@ def generate_page_article_blocks(page_no=1, articles_for='results_container', ar
     num_of_page = get_maximum_pages(articles_for)
     if num_of_page:
         articles = DataFrame(dbm.fetch_articles(
-            articles_for, page_no-1, articles_per_page))
+            articles_for, (page_no-1)*articles_per_page, articles_per_page))
         articles.columns = ['id'] + COLUMN_NAMES
         articles['articles_for'] = articles_for
         articles = articles.to_dict(orient='records')
@@ -103,7 +103,7 @@ def delete_articles_from_bin(article_id):
     dbm.delete_article(article_id)
 
 
-# start('index.html', size=WINDOW_SIZE)
+start('index.html', size=WINDOW_SIZE)
 
 # Display Settings
 set_option('display.max_rows', None)
@@ -224,4 +224,4 @@ def fetch_all():
         dbm.insert_articles(results.to_dict(orient='records'))
 
 
-fetch_all()
+# fetch_all()
