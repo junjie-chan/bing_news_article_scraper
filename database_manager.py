@@ -11,6 +11,7 @@ class DatabaseManager:
         def wrapper(self, *args, **kwargs):
             self.connect_to_database(self.db_name)
             result = func(self, *args, **kwargs)
+            self.commit()
             self.close_db()
             return result
         return wrapper
@@ -21,6 +22,9 @@ class DatabaseManager:
 
     def close_db(self):
         self.__conn.close()
+
+    def commit(self):
+        self.__conn.commit()
 
     @open_and_close_db
     def initialization(self):
@@ -36,7 +40,6 @@ class DatabaseManager:
                 is_in_bin BOOLEAN DEFAULT 0
             )
         ''')
-        self.__conn.commit()
 
     @open_and_close_db
     def fetch_articles(self, articles_for='results_container', offset=0, limit=20):
@@ -73,7 +76,6 @@ class DatabaseManager:
                                   SET is_bookmarked = 1
                                   WHERE id = {article_id};
                                ''')
-        self.__conn.commit()
 
     @open_and_close_db
     def remove_bookmark_article(self, article_id):
@@ -81,7 +83,6 @@ class DatabaseManager:
                                   SET is_bookmarked = 0
                                   WHERE id = {article_id};
                                ''')
-        self.__conn.commit()
 
     @open_and_close_db
     def move_article_to_bin(self, article_id):
@@ -89,14 +90,30 @@ class DatabaseManager:
                                   SET is_in_bin = 1, is_bookmarked = 0
                                   WHERE id = {article_id};
                                ''')
-        self.__conn.commit()
 
     @open_and_close_db
     def delete_article(self, article_id):
         self.__cursor.execute(f'''DELETE FROM articles
                                   WHERE id = {article_id};
                                ''')
-        self.__conn.commit()
+
+    @open_and_close_db
+    def fetch_all(self):
+        self.__cursor.execute('''SELECT title,url,description,date,time,keyword,is_bookmarked,is_in_bin
+                                 FROM articles''')
+        return self.__cursor.fetchall()
+
+    @open_and_close_db
+    def clear_database(self):
+        self.__cursor.execute('DELETE FROM articles;')
+
+    @open_and_close_db
+    def insert_articles(self, data):
+        for row in data:
+            self.__cursor.execute('''INSERT INTO articles 
+                                     (title, url, description, date, time, keyword, is_bookmarked, is_in_bin)
+                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', tuple(row.values()))
+
 
 # dbm = DatabaseManager()
 # dbm.add_saved_article('32')
