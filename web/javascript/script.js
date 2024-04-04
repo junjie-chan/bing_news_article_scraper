@@ -578,6 +578,21 @@ function search() {
   input_element.value = "";
 }
 
+// Toggle to activate and deactivate the freshness buttons
+function toggle_freshness(button) {
+  var freshness = button.textContent.trim();
+  // 检查按钮是否有 active 类
+  if (button.classList.contains("active")) {
+    // 移除 active 类
+    button.classList.remove("active");
+    freshness_included = "";
+  } else {
+    // 添加 active 类
+    button.classList.add("active");
+    freshness_included = freshness;
+  }
+}
+
 // Toggle to activate and deactivate the country buttons
 function toggle_country(button) {
   var country = button.textContent.trim();
