@@ -509,3 +509,8 @@ body{
     font-weight: 550;
     transition: 0.15s ease;
 }
+.settings_container p{
+    font-size: 25px;
+    color: var(--sidebar_text_color);
+    font-weight: 600;
+}
