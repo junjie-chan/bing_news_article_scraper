@@ -478,10 +478,17 @@ body{
 }
 
 /* Configuration Page Styling */
-.countries button span{
-    padding-right: 6px;
+.country_buttons_all{
+    text-align: center;
+}
+.country_buttons_all .row{
+    margin: 20px 0;
+}
+.country_buttons span{
+    margin-right: 5px;
 }
 .country_buttons {
+    text-align: left;
     font-size: 18px;
     background-color: lightgray;
     color: var(--article_block_background_color);
@@ -490,8 +497,9 @@ body{
     border: none;
     border-color: transparent;
     border-radius: 5px;
-    padding: 8px 15px;
+    padding: 12px 17px;
     transition: 0.15s ease;
+    width: 80%;
 }
 .country_buttons.active {
     /* background-color: var(--sidebar_option_animation_color); */
