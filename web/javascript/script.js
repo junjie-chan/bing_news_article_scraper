@@ -224,6 +224,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
       display_articles(articles_for);
       display_next_page_buttons(articles_for);
     }
+    // If the "Settings" button within the sidebar is clicked
+    else if (e.target.matches(".settings_button")) {
+      articles_for = "";
+      show_section("settings_container");
+    }
 
     // If a bookmark button within the article block in "Results" section is clicked
     if (
