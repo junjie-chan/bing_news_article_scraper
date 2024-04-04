@@ -545,3 +545,14 @@ function search() {
   var keyword = input_element.value;
   input_element.value = "";
 }
+
+function toggle_country(button) {
+  // 检查按钮是否有 active 类
+  if (button.classList.contains("active")) {
+    // 移除 active 类
+    button.classList.remove("active");
+  } else {
+    // 添加 active 类
+    button.classList.add("active");
+  }
+}
