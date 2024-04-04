@@ -51,9 +51,26 @@ eel.expose(display_country_buttons);
 function display_country_buttons() {
   eel.generate_country_buttons()(function (html_content) {
     // Find the container
-    var countries_container = document.querySelector(".countries_container");
+    var country_buttons_container = document.querySelector(
+      ".country_buttons_container"
+    );
     // Add HTML codes
-    countries_container.innerHTML = html_content;
+    country_buttons_container.innerHTML = html_content;
+    set_default_countries();
+  });
+}
+
+// Display Freshness Buttons
+eel.expose(display_freshness_buttons);
+function display_freshness_buttons() {
+  eel.generate_freshness_buttons()(function (html_content) {
+    // Find the container
+    var freshness_buttons_container = document.querySelector(
+      ".freshness_buttons_container"
+    );
+    // Add HTML codes
+    freshness_buttons_container.innerHTML = html_content;
+    set_default_freshness();
   });
 }
 
@@ -203,6 +220,8 @@ function search_box_toggle() {
 // ==============================================================================================================
 
 // Initialization
+var countries_included = [];
+var freshness_included = "";
 var articles_for = "results_container";
 display_sidebar();
 show_section(articles_for);
@@ -239,6 +258,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     else if (e.target.matches(".settings_button")) {
       articles_for = "";
       show_section("settings_container");
+      display_freshness_buttons();
       display_country_buttons();
     }
 
@@ -558,13 +578,56 @@ function search() {
   input_element.value = "";
 }
 
-function toggle_country(button) {
+// Toggle to activate and deactivate the freshness buttons
+function toggle_freshness(button) {
+  var freshness = button.textContent.trim();
   // 检查按钮是否有 active 类
   if (button.classList.contains("active")) {
     // 移除 active 类
     button.classList.remove("active");
+    freshness_included = "";
   } else {
     // 添加 active 类
     button.classList.add("active");
+    freshness_included = freshness;
   }
+}
+
+// Toggle to activate and deactivate the country buttons
+function toggle_country(button) {
+  var country = button.textContent.trim();
+  // 检查按钮是否有 active 类
+  if (button.classList.contains("active")) {
+    // 移除 active 类
+    button.classList.remove("active");
+    countries_included.splice(countries_included.indexOf(country), 1);
+  } else {
+    // 添加 active 类
+    button.classList.add("active");
+    countries_included.push(country);
+  }
+}
+
+// Set default freshness
+function set_default_freshness() {
+  freshness_included = "Week";
+  document.getElementById(freshness_included).classList.add("active");
+}
+
+// Set default countries
+function set_default_countries() {
+  countries_included = [
+    "Australia",
+    "China",
+    "Japan",
+    "Korea",
+    "Malaysia",
+    "Philippines",
+    "Indonesia",
+    "Hong Kong",
+    "Taiwan",
+  ];
+  countries_included.forEach(function (country_name) {
+    document.getElementById(country_name).classList.add("active");
+  });
 }

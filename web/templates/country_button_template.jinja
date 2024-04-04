@@ -3,7 +3,7 @@
     <div class="row">
         {% for country, code in group.items() %}
         <div class="col-3">
-            <button class="country_buttons" onclick="toggle_country(this)">
+            <button class="country_buttons" onclick="toggle_country(this)" id="{{country}}">
                 <span class="fi fi-{{code}}"></span>
                 {{country}}
             </button>
