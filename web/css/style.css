@@ -499,7 +499,7 @@ body{
     border-radius: 5px;
     padding: 12px 17px;
     transition: 0.15s ease;
-    width: 80%;
+    width: 85%;
 }
 .country_buttons.active {
     /* background-color: var(--sidebar_option_animation_color); */
@@ -509,8 +509,17 @@ body{
     font-weight: 550;
     transition: 0.15s ease;
 }
-.settings_container p{
+.country_container{
+    padding: 20px;
+    background-color: var(--article_block_background_color);
+    border-radius: 13px;
+}
+.country_container .title>*{
+    display: inline-block;
     font-size: 25px;
     color: var(--sidebar_text_color);
     font-weight: 600;
+}
+.country_container .title i{
+    margin-right: 10px;
 }

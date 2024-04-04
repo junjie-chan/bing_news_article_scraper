@@ -51,9 +51,11 @@ eel.expose(display_country_buttons);
 function display_country_buttons() {
   eel.generate_country_buttons()(function (html_content) {
     // Find the container
-    var countries_container = document.querySelector(".countries_container");
+    var country_buttons_container = document.querySelector(
+      ".country_buttons_container"
+    );
     // Add HTML codes
-    countries_container.innerHTML = html_content;
+    country_buttons_container.innerHTML = html_content;
   });
 }
 
