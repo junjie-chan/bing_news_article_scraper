@@ -63,7 +63,9 @@ function get_element_class_name(element, name) {
 }
 
 function get_element_by_class_name(name) {
-  return document.querySelectorAll('[class*="' + name + '"]')[0];
+  return document
+    .querySelector("." + articles_for)
+    .querySelectorAll('[class*="' + name + '"]')[0];
 }
 
 function get_page_no(button_element) {
@@ -120,7 +122,8 @@ async function move_buttons(clicked_button, maximum_pages) {
 }
 
 async function show_section(container_name) {
-  var inner_container = get_element_by_class_name("inner_container");
+  var inner_container = document.querySelector(".inner_container");
+  console.log(inner_container);
   var divs = inner_container.querySelectorAll(":scope > div");
   divs.forEach(function (div) {
     if (
@@ -288,6 +291,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         // }
         // 页数大于8页的情况
         // else {
+
         // 开始位置
         if (index3_page_no == 2) {
           // 点击next
@@ -295,35 +299,37 @@ document.addEventListener("DOMContentLoaded", (event) => {
             // 激活previous按钮
             enable_button("index1");
 
+            // 前4页为激活状态
+            if ([2, 3, 4, 5].includes(active_index_int)) {
+              activate_button(active_index_int + 1, active_button);
+            } // 第5页为激活状态
+            else if (active_index_int == 6) {
+              await move_buttons(
+                get_element_by_class_name("index7"),
+                maximum_pages
+              );
+              activate_button(6, active_button);
+            }
+
             // 处理页数只有2页的情况
-            if (maximum_pages == 2) {
-              console.log(active_index_int + 1);
-              // activate_button(active_index_int + 1, active_button);
-              // disable_button("index4");
-              // enable_button("index1");
-            }
+            // if (maximum_pages == 2) {
+            //   console.log(active_index_int + 1);
+            //   // activate_button(active_index_int + 1, active_button);
+            //   // disable_button("index4");
+            //   // enable_button("index1");
+            // }
             // 处理页数不足9页的情况
-            else if (maximum_pages > 2 && maximum_pages < 9) {
-              // 当前激活的是倒数第二页
-              if (active_index_int == maximum_pages) {
-                activate_button(active_index_int + 1, active_button);
-                disable_button("index" + (maximum_pages + 2));
-              } else {
-                activate_button(active_index_int + 1, active_button);
-              }
-            } else {
-              // 前4页为激活状态
-              if ([2, 3, 4, 5].includes(active_index_int)) {
-                activate_button(active_index_int + 1, active_button);
-              } // 第5页为激活状态
-              else if (active_index_int == 6) {
-                await move_buttons(
-                  get_element_by_class_name("index7"),
-                  maximum_pages
-                );
-                activate_button(6, active_button);
-              }
-            }
+            // else if (maximum_pages > 2 && maximum_pages < 9) {
+            //   // 当前激活的是倒数第二页
+            //   if (active_index_int == maximum_pages) {
+            //     activate_button(active_index_int + 1, active_button);
+            //     disable_button("index" + (maximum_pages + 2));
+            //   } else {
+            //     activate_button(active_index_int + 1, active_button);
+            //   }
+            // } else {
+
+            // }
           }
           // 点击previous
           else if (clicked_text == "Previous") {
