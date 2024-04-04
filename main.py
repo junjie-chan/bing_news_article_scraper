@@ -129,6 +129,12 @@ def generate_country_buttons():
     return run_template('country_button_template.jinja', data)
 
 
+@expose
+def generate_freshness_buttons():
+    data = ['Day', 'Week', 'Month']
+    return run_template('freshness_button_template.jinja', data)
+
+
 start('index.html', size=WINDOW_SIZE)
 
 # Display Settings
