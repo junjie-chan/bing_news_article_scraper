@@ -312,12 +312,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
 
             // 处理页数只有2页的情况
-            // if (maximum_pages == 2) {
-            //   console.log(active_index_int + 1);
-            //   // activate_button(active_index_int + 1, active_button);
-            //   // disable_button("index4");
-            //   // enable_button("index1");
-            // }
+            if (maximum_pages == 2) {
+              activate_button(active_index_int + 1, active_button);
+              disable_button("index4");
+              enable_button("index1");
+            }
             // 处理页数不足9页的情况
             // else if (maximum_pages > 2 && maximum_pages < 9) {
             //   // 当前激活的是倒数第二页
