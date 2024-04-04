@@ -118,12 +118,15 @@ def split_dict_into_rows(input_dict, items_per_row):
     return output_dict
 
 
-# Example usage:
 country_v_icon_mapping = {'Australia': 'au', 'China': 'cn', 'Japan': 'jp', 'Korea': 'kr', 'Malaysia': 'my',
                           'Philippines': 'ph', 'Indonesia': 'id', 'Hong Kong': 'hk', 'Taiwan': 'tw',
                           'New Zealand': 'nz', 'India': 'in'}
 
-data = split_dict_into_rows(country_v_icon_mapping, 4)
+
+@expose
+def generate_country_buttons():
+    data = split_dict_into_rows(country_v_icon_mapping, 4)
+    return run_template('country_button_template.jinja', data)
 
 
 start('index.html', size=WINDOW_SIZE)
