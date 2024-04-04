@@ -485,7 +485,7 @@ body{
     margin: 20px 0;
 }
 .country_buttons span{
-    margin-right: 5px;
+    margin-right: 7px;
 }
 .country_buttons {
     text-align: left;
@@ -509,17 +509,22 @@ body{
     font-weight: 550;
     transition: 0.15s ease;
 }
-.country_container{
+.country_container, 
+.freshness_container{
     padding: 20px;
     background-color: var(--article_block_background_color);
     border-radius: 13px;
+    margin-bottom: 30px;
 }
-.country_container .title>*{
+.country_container .title > *,
+.freshness_container .title > * {
     display: inline-block;
     font-size: 25px;
     color: var(--sidebar_text_color);
     font-weight: 600;
+    margin: 0;
 }
-.country_container .title i{
+.country_container .title i,
+.freshness_container .title i {
     margin-right: 10px;
 }
