@@ -62,25 +62,24 @@ function get_element_class_name(element, name) {
   }
 }
 
+// Get teh first element by a given class name
 function get_element_by_class_name(name) {
   return document
     .querySelector("." + articles_for)
     .querySelectorAll('[class*="' + name + '"]')[0];
 }
 
-function get_page_no(button_element) {
-  var page_name = get_element_class_name(button_element, "page_");
-  return parseInt(page_name.replace("page_", ""));
-}
-
-async function disable_button(button_index) {
-  get_element_by_class_name(button_index).classList.add("disabled");
-}
-
+// Enable a button
 async function enable_button(button_index) {
   get_element_by_class_name(button_index).classList.remove("disabled");
 }
 
+// Disable a button
+async function disable_button(button_index) {
+  get_element_by_class_name(button_index).classList.add("disabled");
+}
+
+// Activate a pagination button
 function activate_button(new_button_index, current_active_button) {
   current_active_button.classList.remove("active");
   var button = get_element_by_class_name("index" + new_button_index);
@@ -93,6 +92,18 @@ function activate_button(new_button_index, current_active_button) {
   display_articles(articles_for, page_no);
 }
 
+// Get the text within the button
+function get_button_text(button) {
+  return button.querySelector("a").textContent;
+}
+
+// Get the page number of a pagination button
+function get_page_no(button_element) {
+  var page_name = get_element_class_name(button_element, "page_");
+  return parseInt(page_name.replace("page_", ""));
+}
+
+// Move the entire set of pagination buttons
 async function move_buttons(clicked_button, maximum_pages) {
   var ul = document.querySelector("." + articles_for + "_buttons > ul");
   var li_tags = ul.querySelectorAll("li");
@@ -121,9 +132,9 @@ async function move_buttons(clicked_button, maximum_pages) {
   }
 }
 
+// Show the content of a section and hide the others
 async function show_section(container_name) {
   var inner_container = document.querySelector(".inner_container");
-  console.log(inner_container);
   var divs = inner_container.querySelectorAll(":scope > div");
   divs.forEach(function (div) {
     if (
@@ -137,17 +148,57 @@ async function show_section(container_name) {
   });
 }
 
-function get_button_text(button) {
-  return button.querySelector("a").textContent;
+// Delete an article from the database permanently
+eel.expose(delete_article);
+function delete_article() {
+  document.getElementById(to_delete_article_id).remove();
+  eel.delete_articles_from_bin(to_delete_article_id);
+  // 如果删掉文章之后界面是空的，需要展示无文章提示
+  if (
+    get_element_by_class_name("bin_container_articles").innerHTML.trim() === ""
+  ) {
+    eel.generate_no_articles_message()(async function (html_content) {
+      get_element_by_class_name("bin_container_articles").innerHTML =
+        html_content;
+      get_element_by_class_name("bin_container_buttons").innerHTML = "";
+    });
+  }
 }
 
-// Load Content
-display_sidebar();
+// Display messages to inform users that no articles are found
+eel.expose(check_last);
+function check_last() {
+  if (articles_for == "bookmarks_container") {
+    if (
+      get_element_by_class_name(
+        "bookmarks_container_articles"
+      ).innerHTML.trim() === ""
+    ) {
+      eel.generate_no_articles_message()(async function (html_content) {
+        get_element_by_class_name("bookmarks_container_articles").innerHTML =
+          html_content;
+        get_element_by_class_name("bookmarks_container_buttons").innerHTML = "";
+      });
+    }
+  }
+}
+
+// Search box slide animation
+function search_box_toggle() {
+  $(".search_container").slideToggle(300);
+}
+
+// ==============================================================================================================
+// ==============================================================================================================
+
+// Initialization
 var articles_for = "results_container";
+display_sidebar();
 show_section(articles_for);
 display_articles(articles_for);
 display_next_page_buttons(articles_for);
 
+// Deal with different button click events
 var to_delete_article_id = "";
 document.addEventListener("DOMContentLoaded", (event) => {
   // Detect click action, e stands for event
@@ -273,24 +324,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       if (clicked_index_int != active_index_int) {
         var index3 = get_element_by_class_name("index3");
         var index3_page_no = get_page_no(index3);
-
-        // 处理页数不足9页的情况
-        // if (maximum_pages > 1 && maximum_pages < 9) {
-        //   // 如果直接点击最后一页
-        //   if (clicked_index_int == maximum_pages + 1) {
-        //     activate_button(maximum_pages + 1, active_button);
-        //     disable_button("index" + (maximum_pages + 2));
-        //   }
-        //   // 如果当前激活的是最后一页而且点的不是next
-        //   else if (
-        //     active_index_int == maximum_pages + 1 &&
-        //     clicked_index_int != maximum_pages + 2
-        //   ) {
-        //     enable_button("index" + (maximum_pages + 2));
-        //   }
-        // }
-        // 页数大于8页的情况
-        // else {
 
         // 开始位置
         if (index3_page_no == 2) {
@@ -479,6 +512,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
+// 默认隐藏搜索框
+$(document).ready(function () {
+  $(".search_container").hide();
+});
+
 // Scrolling Animation
 // $(document).ready(function () {
 //   /* Every time the window is scrolled ... */
@@ -497,51 +535,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 //   });
 // });
 
-eel.expose(delete_article);
-function delete_article() {
-  document.getElementById(to_delete_article_id).remove();
-  eel.delete_articles_from_bin(to_delete_article_id);
-  // 如果删掉文章之后界面是空的，需要展示无文章提示
-  if (
-    get_element_by_class_name("bin_container_articles").innerHTML.trim() === ""
-  ) {
-    eel.generate_no_articles_message()(async function (html_content) {
-      get_element_by_class_name("bin_container_articles").innerHTML =
-        html_content;
-      get_element_by_class_name("bin_container_buttons").innerHTML = "";
-    });
-  }
-}
-
-eel.expose(check_last);
-function check_last() {
-  if (articles_for == "bookmarks_container") {
-    if (
-      get_element_by_class_name(
-        "bookmarks_container_articles"
-      ).innerHTML.trim() === ""
-    ) {
-      eel.generate_no_articles_message()(async function (html_content) {
-        get_element_by_class_name("bookmarks_container_articles").innerHTML =
-          html_content;
-        get_element_by_class_name("bookmarks_container_buttons").innerHTML = "";
-      });
-    }
-  }
-}
-
 function search() {
   var input_element = document.querySelector(".search_container input");
   var keyword = input_element.value;
-  console.log(keyword);
   input_element.value = "";
 }
-
-function animation() {
-  $(".search_container").slideToggle(300);
-}
-
-// 默认隐藏搜索框
-$(document).ready(function () {
-  $(".search_container").hide();
-});

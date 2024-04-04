@@ -75,8 +75,6 @@ body{
     text-decoration: none;
     outline: none;
 }
-
-
 .sidebar_navigation li::before {
     background-color: var(--sidebar_option_animation_color);
     position: absolute;

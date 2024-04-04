@@ -1,12 +1,11 @@
-
-from random import randint
-from requests import get
-from time import sleep
 from math import ceil
+from time import sleep
+from requests import get
+from random import randint
 from eel import init, expose, start
 from database_manager import DatabaseManager
 from jinja2 import Environment, FileSystemLoader
-from pandas import DataFrame, set_option, concat, merge
+from pandas import DataFrame, set_option, concat
 
 WINDOW_SIZE = (1300, 740)
 ARTICLES_PER_PAGE = 10

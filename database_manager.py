@@ -113,8 +113,3 @@ class DatabaseManager:
             self.__cursor.execute('''INSERT INTO articles 
                                      (title, url, description, date, time, keyword, is_bookmarked, is_in_bin)
                                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', tuple(row.values()))
-
-
-# dbm = DatabaseManager()
-# dbm.add_saved_article('32')
-# print(dbm.get_bookmark_articles())
