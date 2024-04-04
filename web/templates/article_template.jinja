@@ -3,48 +3,54 @@
     <!-- Action Block -->
     <div class="action_block">
         <!-- Save Button -->
-        <a href="#" title="Add to Bookmarks">
-            <div class="save_button">
-                <i class="fa fa-bookmark fa-2x" aria-hidden="true"></i>
-            </div>
-        </a>
-        <!-- Close Button -->
         {% if item.articles_for == 'bin_container'%}
-        <a href="#myModal" data-toggle="modal" title="Delete">
-            {% else %}
-            <a href="#" title="Move to Bin">
+        <a href="#" title="Recover">
+            <div class="recover_button">
+                <i class="fa fa-repeat fa-2x" aria-hidden="true"></i>
+                {% else %}
+                <a href="#" title="Add to Bookmarks">
+                    <div class="save_button">
+                        <i class="fa fa-bookmark fa-2x" aria-hidden="true"></i>
+                        {% endif %}
+                    </div>
+                </a>
+                <!-- Close Button -->
+                {% if item.articles_for == 'bin_container'%}
+                <a href="#myModal" data-toggle="modal" title="Delete">
+                    {% else %}
+                    <a href="#" title="Move to Bin">
 
-                {% endif %}
+                        {% endif %}
 
-                <div class="close_button">
-                    <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                        <div class="close_button">
+                            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                        </div>
+                    </a>
+
+            </div>
+            <!-- Article Title -->
+            <div class="title_block">
+                <p class="text_ellipsis">
+                    {{item.title}}
+                </p>
+            </div>
+            <!-- Article Description -->
+            <div class="description_block">
+                <p class="text_ellipsis description">
+                    {{item.description}}
+                </p>
+            </div>
+            <!-- Time & More -->
+            <div class="time_more_block row">
+                <div class="col-9 dates">
+                    <p>Published Date: {{item.date}}</p>
                 </div>
-            </a>
-
+                <div class="col-3 read_more">
+                    <button onclick="window.open('{{item.url}}')">
+                        <i class="fa fa-angle-double-right fa-lg" aria-hidden="true"></i>
+                        Read More
+                    </button>
+                </div>
+            </div>
     </div>
-    <!-- Article Title -->
-    <div class="title_block">
-        <p class="text_ellipsis">
-            {{item.title}}
-        </p>
-    </div>
-    <!-- Article Description -->
-    <div class="description_block">
-        <p class="text_ellipsis description">
-            {{item.description}}
-        </p>
-    </div>
-    <!-- Time & More -->
-    <div class="time_more_block row">
-        <div class="col-9 dates">
-            <p>Published Date: {{item.date}}</p>
-        </div>
-        <div class="col-3 read_more">
-            <button onclick="window.open('{{item.url}}')">
-                <i class="fa fa-angle-double-right fa-lg" aria-hidden="true"></i>
-                Read More
-            </button>
-        </div>
-    </div>
-</div>
-{%endfor%}
+    {%endfor%}
