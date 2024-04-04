@@ -1,0 +1,14 @@
+<div class="country_buttons_all">
+    {% for group in data.values() %}
+    <div class="row">
+        {% for country, code in group.items() %}
+        <div class="col-3">
+            <button class="country_buttons" onclick="toggle_country(this)">
+                <span class="fi fi-{{code}}"></span>
+                {{country}}
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>

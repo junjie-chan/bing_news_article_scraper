@@ -102,6 +102,33 @@ def delete_articles_from_bin(article_id):
     dbm.delete_article(article_id)
 
 
+def split_dict_into_rows(input_dict, items_per_row):
+    output_dict, current_row, row_count = {}, {}, 1
+    for index, (key, value) in enumerate(input_dict.items(), start=1):
+        current_row[key] = value
+        if index % items_per_row == 0:
+            output_dict[f'row{row_count}'] = current_row
+            row_count += 1
+            current_row = {}
+
+    # Add the remaining items if any
+    if current_row:
+        output_dict[f'row{row_count}'] = current_row
+
+    return output_dict
+
+
+country_v_icon_mapping = {'Australia': 'au', 'China': 'cn', 'Japan': 'jp', 'Korea': 'kr', 'Malaysia': 'my',
+                          'Philippines': 'ph', 'Indonesia': 'id', 'Hong Kong': 'hk', 'Taiwan': 'tw',
+                          'New Zealand': 'nz', 'India': 'in'}
+
+
+@expose
+def generate_country_buttons():
+    data = split_dict_into_rows(country_v_icon_mapping, 4)
+    return run_template('country_button_template.jinja', data)
+
+
 start('index.html', size=WINDOW_SIZE)
 
 # Display Settings
