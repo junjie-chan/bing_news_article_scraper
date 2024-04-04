@@ -227,7 +227,13 @@ body{
     font-size: 18px;
     line-height: 27px;
 }
-
+.read_more button{
+    display: flex;
+    align-items: center;
+}
+.read_more button i{
+    padding-left: 8px;
+}
 
 
 /* Page Buttons Styling */
@@ -447,10 +453,10 @@ body{
     cursor: pointer;
 }
 
-input[type=text]::placeholder {
+.search_container input[type=text]::placeholder {
     text-transform: uppercase;
 }
-input[type=text] {
+.search_container input[type=text] {
     position: relative;
     padding: 5px 10px;
     width: 100%;
@@ -461,12 +467,12 @@ input[type=text] {
     transition: width 0.4s ease;
     outline: none;
     text-transform: none;
-    border: 3.5px solid transparent;
+    /* border: 3.5px solid transparent; */
     border-radius: 6px;
     outline: none;
 
     &:focus {
         background-color: white;
-        border: rgb(59, 153, 253) 3.5px solid;
+        /* border: rgb(59, 153, 253) 3.5px solid; */
     }
 }
