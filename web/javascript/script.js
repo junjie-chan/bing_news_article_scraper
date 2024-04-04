@@ -593,6 +593,12 @@ function toggle_country(button) {
   }
 }
 
+// Set default freshness
+function set_default_freshness() {
+  freshness_included = "Week";
+  document.getElementById(freshness_included).classList.add("active");
+}
+
 // Set default countries
 function set_default_countries() {
   countries_included = [
