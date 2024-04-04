@@ -478,16 +478,18 @@ body{
 }
 
 /* Configuration Page Styling */
-.country_buttons_all{
+.country_buttons_all {
     text-align: center;
 }
-.country_buttons_all .row{
+.country_buttons_all .row,
+.freshness_buttons_container .row {
     margin: 20px 0;
 }
-.country_buttons span{
+.country_buttons span {
     margin-right: 7px;
 }
-.country_buttons {
+.country_buttons,
+.freshness_buttons {
     text-align: left;
     font-size: 18px;
     background-color: lightgray;
@@ -501,7 +503,8 @@ body{
     transition: 0.15s ease;
     width: 85%;
 }
-.country_buttons.active {
+.country_buttons.active, 
+.freshness_buttons.active {
     /* background-color: var(--sidebar_option_animation_color); */
     background-color: rgb(7, 112, 204);
     transform: scale(1.15);
@@ -521,10 +524,20 @@ body{
     display: inline-block;
     font-size: 25px;
     color: var(--sidebar_text_color);
-    font-weight: 600;
+    font-weight: 400;
     margin: 0;
 }
 .country_container .title i,
 .freshness_container .title i {
     margin-right: 10px;
+}
+.freshness_buttons {
+    text-align: center;
+}
+.freshness_buttons_container {
+    width: 100%;
+}
+.freshness_buttons_container .row{
+    width: 80%;
+    margin-left: 10%;
 }
