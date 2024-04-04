@@ -60,6 +60,20 @@ function display_country_buttons() {
   });
 }
 
+// Display Freshness Buttons
+eel.expose(display_freshness_buttons);
+function display_freshness_buttons() {
+  eel.generate_freshness_buttons()(function (html_content) {
+    // Find the container
+    var freshness_buttons_container = document.querySelector(
+      ".freshness_buttons_container"
+    );
+    // Add HTML codes
+    freshness_buttons_container.innerHTML = html_content;
+    set_default_freshness();
+  });
+}
+
 // Load Article Source Page by URL
 function load_url(url) {
   window.open(url, "_blank");
@@ -207,6 +221,7 @@ function search_box_toggle() {
 
 // Initialization
 var countries_included = [];
+var freshness_included = "";
 var articles_for = "results_container";
 display_sidebar();
 show_section(articles_for);
@@ -243,6 +258,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     else if (e.target.matches(".settings_button")) {
       articles_for = "";
       show_section("settings_container");
+      display_freshness_buttons();
       display_country_buttons();
     }
 
@@ -562,6 +578,7 @@ function search() {
   input_element.value = "";
 }
 
+// Toggle to activate and deactivate the country buttons
 function toggle_country(button) {
   var country = button.textContent.trim();
   // 检查按钮是否有 active 类
@@ -590,7 +607,6 @@ function set_default_countries() {
     "Taiwan",
   ];
   countries_included.forEach(function (country_name) {
-    console.log(country_name);
     document.getElementById(country_name).classList.add("active");
   });
 }
