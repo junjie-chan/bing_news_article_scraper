@@ -46,6 +46,17 @@ function display_next_page_buttons(articles_for = "results_container") {
   });
 }
 
+// Display Country Buttons
+eel.expose(display_country_buttons);
+function display_country_buttons() {
+  eel.generate_country_buttons()(function (html_content) {
+    // Find the container
+    var countries_container = document.querySelector(".countries_container");
+    // Add HTML codes
+    countries_container.innerHTML = html_content;
+  });
+}
+
 // Load Article Source Page by URL
 function load_url(url) {
   window.open(url, "_blank");
@@ -228,6 +239,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     else if (e.target.matches(".settings_button")) {
       articles_for = "";
       show_section("settings_container");
+      display_country_buttons();
     }
 
     // If a bookmark button within the article block in "Results" section is clicked
