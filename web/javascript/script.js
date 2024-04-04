@@ -56,6 +56,7 @@ function display_country_buttons() {
     );
     // Add HTML codes
     country_buttons_container.innerHTML = html_content;
+    set_default_countries();
   });
 }
 
@@ -205,6 +206,7 @@ function search_box_toggle() {
 // ==============================================================================================================
 
 // Initialization
+var countries_included = [];
 var articles_for = "results_container";
 display_sidebar();
 show_section(articles_for);
@@ -561,12 +563,34 @@ function search() {
 }
 
 function toggle_country(button) {
+  var country = button.textContent.trim();
   // 检查按钮是否有 active 类
   if (button.classList.contains("active")) {
     // 移除 active 类
     button.classList.remove("active");
+    countries_included.splice(countries_included.indexOf(country), 1);
   } else {
     // 添加 active 类
     button.classList.add("active");
+    countries_included.push(country);
   }
+}
+
+// Set default countries
+function set_default_countries() {
+  countries_included = [
+    "Australia",
+    "China",
+    "Japan",
+    "Korea",
+    "Malaysia",
+    "Philippines",
+    "Indonesia",
+    "Hong Kong",
+    "Taiwan",
+  ];
+  countries_included.forEach(function (country_name) {
+    console.log(country_name);
+    document.getElementById(country_name).classList.add("active");
+  });
 }
