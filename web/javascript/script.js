@@ -357,6 +357,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
       }
     }
 
+    // If the search button is clicked
+    if (e.target.classList.contains("search_article_button")) {
+      // Check if the search box is empty
+      var input_box = document.querySelector(
+        ".search_container .input_box input"
+      );
+      if (input_box.value.trim() == "") {
+        var myModal = new bootstrap.Modal(
+          document.getElementById("empty_search_box")
+        );
+        myModal.show();
+      }
+    }
+
     // If a pagination button is clicked
     if (e.target.matches(".pagination .page-link")) {
       var maximum_pages = await eel.get_maximum_pages(articles_for)();
@@ -645,3 +659,5 @@ function set_default_countries() {
     document.getElementById(country_name).classList.add("active");
   });
 }
+
+function show_alert(message) {}
