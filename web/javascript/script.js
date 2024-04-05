@@ -385,19 +385,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
             country_needed.show();
           } else {
             // Perform actual search
-            // api_key, freshness, countries, keywords
-            eel.search(
+            await eel.search(
               api_box.value.trim(),
               freshness_included,
               countries_included,
               input_box.value.trim()
             );
+
             // Clear the search box
-            var input_element = document.querySelector(
-              ".search_container input"
-            );
-            var keyword = input_element.value;
-            input_element.value = "";
+            input_box.value = "";
+            // Close the search box
+            search_box_toggle();
+            // Show the results
+            articles_for = "results_container";
+            show_section(articles_for);
           }
         }
       }
