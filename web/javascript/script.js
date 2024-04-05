@@ -385,6 +385,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
             country_needed.show();
           } else {
             // Perform actual search
+            // api_key, freshness, countries, keywords
+            eel.search(
+              api_box.value.trim(),
+              freshness_included,
+              countries_included,
+              input_box.value.trim()
+            );
             // Clear the search box
             var input_element = document.querySelector(
               ".search_container input"
@@ -684,5 +691,3 @@ function set_default_countries() {
     document.getElementById(country_name).classList.add("active");
   });
 }
-
-function show_alert(message) {}
