@@ -343,6 +343,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
       to_delete_article_id = article_id;
     }
 
+    // If the eye icon is clicked
+    if (e.target.classList.contains("display_key")) {
+      // Toggle
+      if (e.target.classList.contains("fa-eye-slash")) {
+        e.target.classList.remove("fa-eye-slash");
+        e.target.classList.add("fa-eye");
+        document.querySelector(".api_container input").type = "text";
+      } else {
+        e.target.classList.remove("fa-eye");
+        e.target.classList.add("fa-eye-slash");
+        document.querySelector(".api_container input").type = "password";
+      }
+    }
+
     // If a pagination button is clicked
     if (e.target.matches(".pagination .page-link")) {
       var maximum_pages = await eel.get_maximum_pages(articles_for)();

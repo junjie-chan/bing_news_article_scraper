@@ -556,7 +556,7 @@ body{
 
 .api_container input {
     color: var(--body_background_color) !important;
-    padding: 10px;
+    padding: 10px 25px;
     width: 60%;
     height: 100%;
     font-size: 16px;
