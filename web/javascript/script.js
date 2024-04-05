@@ -364,10 +364,24 @@ document.addEventListener("DOMContentLoaded", (event) => {
         ".search_container .input_box input"
       );
       if (input_box.value.trim() == "") {
-        var myModal = new bootstrap.Modal(
+        var empty_search_box = new bootstrap.Modal(
           document.getElementById("empty_search_box")
         );
-        myModal.show();
+        empty_search_box.show();
+      } else {
+        // Check if an API key is provided
+        var api_box = document.querySelector(".api_container input");
+        if (api_box.value.trim() == "") {
+          var api_needed = new bootstrap.Modal(
+            document.getElementById("api_needed")
+          );
+          api_needed.show();
+        } else {
+          // Clear the search box
+          var input_element = document.querySelector(".search_container input");
+          var keyword = input_element.value;
+          input_element.value = "";
+        }
       }
     }
 
@@ -600,11 +614,11 @@ $(document).ready(function () {
 //   });
 // });
 
-function search() {
-  var input_element = document.querySelector(".search_container input");
-  var keyword = input_element.value;
-  input_element.value = "";
-}
+// function search() {
+// var input_element = document.querySelector(".search_container input");
+// var keyword = input_element.value;
+// input_element.value = "";
+// }
 
 // Toggle to activate and deactivate the freshness buttons
 function toggle_freshness(button) {
