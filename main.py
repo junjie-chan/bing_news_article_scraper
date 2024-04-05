@@ -93,6 +93,11 @@ def cancel_bookmark_articles(article_id):
 
 
 @expose
+def recover_bin_articles(article_id):
+    dbm.recover_article_from_bin(article_id)
+
+
+@expose
 def add_articles_to_bin(article_id):
     dbm.move_article_to_bin(article_id)
 
