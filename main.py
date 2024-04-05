@@ -135,37 +135,31 @@ def generate_freshness_buttons():
     return run_template('freshness_button_template.jinja', data)
 
 
-start('index.html', size=WINDOW_SIZE)
-
 # Display Settings
-set_option('display.max_rows', None)
-set_option('display.max_columns', None)
-set_option('display.expand_frame_repr', False)
-set_option('display.float_format', lambda x: '%.2f' % x)  # 打印完整数据
-set_option('display.max_colwidth', None)
-
+# set_option('display.max_rows', None)
+# set_option('display.max_columns', None)
+# set_option('display.expand_frame_repr', False)
+# set_option('display.float_format', lambda x: '%.2f' % x)  # 打印完整数据
+# set_option('display.max_colwidth', None)
 # cc (country code): AU, HK, IN, ID, JP, KR, MY, NZ, CN, PH, TW
 # 定义了 cc 就不需要定义 mkt
 # q: 之在 /news/search endpoint 中必须有值
 # GEONAMES_ACCOUNT = 'geo_checker'
 BING_API_KEY = 'f75c19678e6f46f998b0e89be180f8c8'
-KEYWORDS = ['mobility']
-COUNT = 100
-FRESHNESS = 'Week'
-FILE_PATH = r'D:\用户文档转移\Desktop\articles_test.xlsx'
 
-# API Initialization
-search_url = "https://api.bing.microsoft.com/v7.0/news/search"
-headers = {"Ocp-Apim-Subscription-Key": BING_API_KEY}
+
+# FILE_PATH = r'D:\用户文档转移\Desktop\articles_test.xlsx'
 
 # Parameters
-# countries = ['Australia', 'Hong Kong', 'India', 'Indonesia', 'Japan', 'Korea', 'Malaysia', 'NewZealand', 'China',
-#              'Philippines', 'Taiwan']
-countries = ['Australia']
 markets = {'Australia': 'en-AU', 'Hong Kong': 'zh-HK', 'India': 'en-IN', 'Indonesia': 'en-ID', 'Japan': 'ja-JP',
            'Korea': 'ko-KR', 'Malaysia': 'en-MY', 'NewZealand': 'en-NZ', 'China': 'zh-CN', 'Philippines': 'en-PH',
            'Taiwan': 'zh-TW'}
-previous_message = None
+search_url = "https://api.bing.microsoft.com/v7.0/news/search"
+headers = ''
+COUNT = 100
+FRESHNESS = ''
+KEYWORDS = []
+countries = []
 
 
 def fetch(params):
@@ -210,8 +204,6 @@ def fetch_one_query(query):
             articles = articles[COLUMN_NAMES]
             res = concat([res, articles], ignore_index=True)
             num_of_articles = articles.title.count()
-            print(
-                f'Keyword: "{query}", {country} News Count: {num_of_articles}')
 
             # Check if there are more articles available
             if num_of_articles < 100:
@@ -256,4 +248,15 @@ def fetch_all():
         dbm.insert_articles(results.to_dict(orient='records'))
 
 
-# fetch_all()
+@expose
+def search(api_key, freshness, countries_to_search, keywords):
+    global headers, FRESHNESS, countries, KEYWORDS
+    # API Initialization
+    headers = {"Ocp-Apim-Subscription-Key": api_key}
+    FRESHNESS = freshness
+    countries = countries_to_search
+    KEYWORDS = [keywords]
+    fetch_all()
+
+
+start('index.html', size=WINDOW_SIZE)
