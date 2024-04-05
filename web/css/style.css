@@ -588,10 +588,12 @@ body{
     }
 }
 
-#empty_search_box{
+#empty_search_box,
+#api_needed {
     padding-left: var(--sidebar_width);
 }
-#empty_search_box button{
+#empty_search_box button,
+#api_needed button {
     background-color: rgb(193, 193, 193);
     &:hover{
         background-color: rgb(148, 148, 148);
