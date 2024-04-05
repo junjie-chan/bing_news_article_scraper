@@ -92,6 +92,13 @@ class DatabaseManager:
                                ''')
 
     @open_and_close_db
+    def recover_article_from_bin(self, article_id):
+        self.__cursor.execute(f'''UPDATE articles
+                                  SET is_in_bin = 0, is_bookmarked = 0
+                                  WHERE id = {article_id};
+                               ''')
+
+    @open_and_close_db
     def delete_article(self, article_id):
         self.__cursor.execute(f'''DELETE FROM articles
                                   WHERE id = {article_id};
