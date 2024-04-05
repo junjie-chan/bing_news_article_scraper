@@ -127,7 +127,40 @@
                 </div>
               </div>
 
-              <!-- Empty Search Box Window -->
+              <!-- No Countries Selected Window -->
+              <div
+                class="modal"
+                id="country_needed"
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-confirm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="icon-box">
+                        <i class="material-icons">&#xe645;</i>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      <p>
+                        Please ensure that at least one country is selected for
+                        the search.
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- No API Provided Window -->
               <div
                 class="modal"
                 id="api_needed"
