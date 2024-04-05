@@ -377,10 +377,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
           );
           api_needed.show();
         } else {
-          // Clear the search box
-          var input_element = document.querySelector(".search_container input");
-          var keyword = input_element.value;
-          input_element.value = "";
+          // Check if at least one country is selected
+          if (countries_included.length == 0) {
+            var country_needed = new bootstrap.Modal(
+              document.getElementById("country_needed")
+            );
+            country_needed.show();
+          } else {
+            // Perform actual search
+            // Clear the search box
+            var input_element = document.querySelector(
+              ".search_container input"
+            );
+            var keyword = input_element.value;
+            input_element.value = "";
+          }
         }
       }
     }
