@@ -563,10 +563,20 @@ body{
     border-radius: 6px;
     outline: none;
     border: none;
-    margin-left: 15px !important;
+    margin: 0 15px !important;
     text-align: center;
 
     &:focus {
         background-color: white;
+    }
+}
+
+.display_key {
+    cursor: pointer;
+    transition: 0.15s ease;
+
+    &:hover {
+        transform: scale(1.5);
+        transition: 0.15s ease;
     }
 }
