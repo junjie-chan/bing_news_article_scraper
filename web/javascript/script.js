@@ -342,6 +342,28 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var article_id = article_block.getAttribute("id");
       to_delete_article_id = article_id;
     }
+    // If a recover button within the article block in "Trash Bin" section is clicked
+    else if (
+      (e.target.matches(
+        ".bin_container_articles .article_block .action_block .fa-repeat"
+      ) ||
+        e.target.matches(
+          ".bin_container_articles .article_block .action_block .recover_button"
+        )) &&
+      articles_for == "bin_container"
+    ) {
+      e.preventDefault();
+      // 获取对应文章的ID
+      var article_block = e.target.closest(".article_block");
+      var article_id = article_block.getAttribute("id");
+      to_recover_article_id = article_id;
+
+      // 获取对应文章的ID
+      eel.recover_bin_articles(article_id);
+      // Remove the article
+      article_block.remove();
+      check_last();
+    }
 
     // If the eye icon is clicked
     if (e.target.classList.contains("display_key")) {
@@ -385,19 +407,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
             country_needed.show();
           } else {
             // Perform actual search
-            // api_key, freshness, countries, keywords
-            eel.search(
+            await eel.search(
               api_box.value.trim(),
               freshness_included,
               countries_included,
               input_box.value.trim()
             );
+
             // Clear the search box
-            var input_element = document.querySelector(
-              ".search_container input"
-            );
-            var keyword = input_element.value;
-            input_element.value = "";
+            input_box.value = "";
+            // Close the search box
+            search_box_toggle();
+            // Show the results
+            articles_for = "results_container";
+            show_section(articles_for);
           }
         }
       }
