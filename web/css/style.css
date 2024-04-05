@@ -512,6 +512,11 @@ body{
     font-weight: 550;
     transition: 0.15s ease;
 }
+.country_buttons:hover,
+.freshness_buttons:hover {
+    transform: scale(1.15);
+    transition: 0.15s ease;
+}
 .country_container, 
 .freshness_container,
 .api_container {
