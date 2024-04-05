@@ -33,7 +33,11 @@
         />
       </div>
       <div class="icon_button">
-        <i class="fa fa-search fa-2x" aria-hidden="true" onclick="search()"></i>
+        <i
+          class="fa fa-search fa-2x search_article_button"
+          aria-hidden="true"
+          onclick="search()"
+        ></i>
       </div>
     </div>
 
@@ -90,6 +94,41 @@
               </div>
 
               <!-- Modal HTML -->
+              <!-- Empty Search Box Window -->
+              <div
+                class="modal"
+                id="empty_search_box"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-confirm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="icon-box">
+                        <i class="material-icons">&#xe645;</i>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      <p>
+                        Please ensure that at least one keyword is provided for
+                        the search.
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Delete Window -->
               <div id="myModal" class="modal fade custom_modal">
                 <div class="modal-dialog modal-confirm">
                   <div class="modal-content">
@@ -138,5 +177,6 @@
     <script src="javascript/script.js"></script>
     <script src="javascript/jquery/jquery.min.js"></script>
     <script src="javascript/bootstrap/bootstrap.min.js"></script>
+    <script src="javascript/bootstrap/bootstrap.bundle.min.js"></script>
   </body>
 </html>
