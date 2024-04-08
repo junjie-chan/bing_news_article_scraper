@@ -590,14 +590,44 @@ body{
 
 #empty_search_box,
 #api_needed,
-#country_needed {
+#country_needed,
+#about_window {
     padding-left: var(--sidebar_width);
 }
 #empty_search_box button,
 #api_needed button,
-#country_needed button {
+#country_needed button,
+#about_window button {
     background-color: rgb(193, 193, 193);
     &:hover{
         background-color: rgb(148, 148, 148);
     }
+}
+
+.about_window_lines {
+    text-align: left;
+    padding-left: 20px;
+}
+.about_window_lines p:first-of-type {
+    font-weight: 700;
+    color: #848181;
+}
+.about_window_lines i {
+    width: 25px;
+    text-align: center;
+    margin-right: 5px;
+}
+.about_window_lines>*{
+    display: inline-block;
+}
+#about_window .modal-content {
+    padding: 40px 40px 25px 40px;
+}
+#about_window .modal-footer {
+    padding-bottom: 10px;
+}
+#about_window .modal-dialog {
+    margin-left: 25% !important;
+    margin-right: 25% !important;
+    width: 100%;
 }

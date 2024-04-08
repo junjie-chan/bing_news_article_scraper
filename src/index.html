@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bing News Extractor</title>
+    <title>Bing News Extractor (v1.11.213 Beta)</title>
 
     <!-- Style Sheets -->
+    <link rel="icon" type="image/x-icon" href="app_icon.ico" />
     <link rel="stylesheet" href="javascript/bootstrap/bootstrap.css" />
     <link
       rel="stylesheet"
@@ -179,6 +180,54 @@
                         Please ensure that an API key is provided before
                         starting the search.
                       </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- About Window -->
+              <div
+                class="modal"
+                id="about_window"
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-confirm">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <img
+                        src="icon.png"
+                        style="width: 25%; padding-bottom: 25px"
+                      />
+                      <div class="about_window_lines">
+                        <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                        <p>Tool Name:</p>
+                        <p>Bing News Extractor</p>
+                      </div>
+                      <div class="about_window_lines">
+                        <i class="fa fa-code-fork" aria-hidden="true"></i>
+                        <p>Current Version:</p>
+                        <p>v1.11.213 (Beta)</p>
+                      </div>
+                      <div class="about_window_lines">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p>Author:</p>
+                        <p>Junjie Chan</p>
+                      </div>
+                      <div class="about_window_lines">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <p>Contact:</p>
+                        <p>junjie.chan@outlook.com</p>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button

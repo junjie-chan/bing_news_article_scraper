@@ -1,11 +1,13 @@
+from pandas import DataFrame, set_option, concat
+from jinja2 import Environment, FileSystemLoader
+from database_manager import DatabaseManager
+from eel import init, start, expose, show
 from math import ceil
 from time import sleep
 from requests import get
 from random import randint
 from eel import init, expose, start
-from database_manager import DatabaseManager
-from jinja2 import Environment, FileSystemLoader
-from pandas import DataFrame, set_option, concat
+
 
 WINDOW_SIZE = (1300, 740)
 ARTICLES_PER_PAGE = 10
@@ -13,12 +15,12 @@ COLUMN_NAMES = ['title', 'url', 'description', 'date', 'time', 'keyword']
 dbm = DatabaseManager()
 
 # 函数放在 .init 和 .start 之间
-init('web')
+init('src')
 
 
 @expose
 def run_template(file_name, data=None):
-    env = Environment(loader=FileSystemLoader('web/templates/'))
+    env = Environment(loader=FileSystemLoader('src/templates/'))
     template = env.get_template(file_name)
     context = {'data': data}
     return template.render(context)

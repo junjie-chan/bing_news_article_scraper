@@ -2,7 +2,7 @@ from sqlite3 import connect
 
 
 class DatabaseManager:
-    def __init__(self, db_name='bing_news_articles'):
+    def __init__(self, db_name='src/bing_news_articles'):
         self.db_name = db_name
         self.initialization()
 
@@ -53,7 +53,7 @@ class DatabaseManager:
         self.__cursor.execute(f'''SELECT id, title, url, description, date, time, keyword 
                                   FROM articles
                                   {where_clause}
-                                  ORDER BY date ASC, time ASC
+                                  ORDER BY date DESC, time DESC
                                   LIMIT {limit} OFFSET {offset};''')
         return self.__cursor.fetchall()
 

@@ -261,6 +261,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
       display_freshness_buttons();
       display_country_buttons();
     }
+    // If the "About" button within the sidebar is clicked
+    else if (e.target.matches(".about_button")) {
+      articles_for = "";
+      var about_window = new bootstrap.Modal(
+        document.getElementById("about_window")
+      );
+      about_window.show();
+    }
 
     // If a bookmark button within the article block in "Results" section is clicked
     if (
