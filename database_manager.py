@@ -36,6 +36,7 @@ class DatabaseManager:
                 date DATE,
                 time TIME,
                 keyword TEXT,
+                country TEXT,
                 is_bookmarked BOOLEAN DEFAULT 0,
                 is_in_bin BOOLEAN DEFAULT 0
             )

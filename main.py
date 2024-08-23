@@ -152,11 +152,9 @@ def generate_freshness_buttons():
 # 定义了 cc 就不需要定义 mkt
 # q: 之在 /news/search endpoint 中必须有值
 # GEONAMES_ACCOUNT = 'geo_checker'
-BING_API_KEY = 'f75c19678e6f46f998b0e89be180f8c8'
 
 
 # FILE_PATH = r'D:\用户文档转移\Desktop\articles_test.xlsx'
-
 # Parameters
 markets = {'Australia': 'en-AU', 'Hong Kong': 'zh-HK', 'India': 'en-IN', 'Indonesia': 'en-ID', 'Japan': 'ja-JP',
            'Korea': 'ko-KR', 'Malaysia': 'en-MY', 'NewZealand': 'en-NZ', 'China': 'zh-CN', 'Philippines': 'en-PH',
@@ -175,7 +173,7 @@ def fetch(params):
     return response
 
 
-def process_data(response, keyword):
+def process_data(response, keyword, country):
     results = response.json()
     articles = [{'title': i.get('name'),
                  'url': i.get('url'),
@@ -184,7 +182,8 @@ def process_data(response, keyword):
                  'mentions': ', '.join([m.get('name') for m in i.get('mentions', [])]),
                  'date': i.get('datePublished').split('T')[0],
                  'time': i.get('datePublished').split('T')[1].split('.')[0],
-                 'keyword': keyword
+                 'keyword': keyword,
+                 'country': country
                  } for i in results.get('value')]
     return articles
 
@@ -207,7 +206,7 @@ def fetch_one_query(query):
 
         while not fetch_next_country:
             params.update({'mkt': markets.get(country)})
-            articles = DataFrame(process_data(fetch(params), query))
+            articles = DataFrame(process_data(fetch(params), query, country))
             articles = articles[COLUMN_NAMES]
             res = concat([res, articles], ignore_index=True)
             num_of_articles = articles.title.count()
@@ -232,6 +231,7 @@ def fetch_all():
                          ignore_index=True)
 
     results = results.drop_duplicates('title')
+    results.keyword = results.keyword.astype(str)
     results['is_bookmarked'] = 0
     results['is_in_bin'] = 0
 
