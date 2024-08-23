@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     ) {
       // 如果当前展示的是收藏页则将其移除收藏页
       e.preventDefault();
-      // 获取对应文章的ID
+      // Get the article ID
       var article_block = e.target.closest(".article_block");
       var article_id = article_block.getAttribute("id");
       eel.cancel_bookmark_articles(article_id);
@@ -324,9 +324,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         ".results_container_articles .article_block .action_block .close_button"
       )
     ) {
-      // 移除文章到垃圾箱
+      // Move the article to the bin
       e.preventDefault();
-      // 获取对应文章的ID
+      // Get the article ID
       var article_block = e.target.closest(".article_block");
       var article_id = article_block.getAttribute("id");
       eel.add_articles_to_bin(article_id);
@@ -343,9 +343,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         ".bin_container_articles .article_block .action_block .close_button"
       )
     ) {
-      // 移除文章到垃圾箱
+      // Move the article to the bin
       e.preventDefault();
-      // 获取对应文章的ID
+      // Get the article ID
       var article_block = e.target.closest(".article_block");
       var article_id = article_block.getAttribute("id");
       to_delete_article_id = article_id;
@@ -361,13 +361,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
       articles_for == "bin_container"
     ) {
       e.preventDefault();
-      // 获取对应文章的ID
+      // Get article ID
       var article_block = e.target.closest(".article_block");
       var article_id = article_block.getAttribute("id");
       to_recover_article_id = article_id;
-
-      // 获取对应文章的ID
       eel.recover_bin_articles(article_id);
+
       // Remove the article
       article_block.remove();
       check_last();
@@ -454,7 +453,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
         var index3_page_no = get_page_no(index3);
 
         // 开始位置
-        if (index3_page_no == 2) {
+        if (
+          index3_page_no == 2 &&
+          get_button_text(get_element_by_class_name("index2")).trim() != "..."
+        ) {
           // 点击next
           if (clicked_text == "Next") {
             // 激活previous按钮
@@ -543,9 +545,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
               }
             }
           }
-        } else if (maximum_pages > 8) {
+        } else {
           // 结尾位置（只对页数大于8页有效）
           if (index3_page_no == maximum_pages - 7) {
+            console.log("work");
             // 点击next且当前激活页不是倒数第1页
             if (clicked_text == "Next" && active_index_int != 10) {
               // 点击next且当前激活页是倒数第3页，取消next按钮激活状态
@@ -640,7 +643,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
-// 默认隐藏搜索框
+// Hide the search box by default
 $(document).ready(function () {
   $(".search_container").hide();
 });
